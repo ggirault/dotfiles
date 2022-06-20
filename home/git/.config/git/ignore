@@ -1,0 +1,59 @@
+### OS files
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+$RECYCLE.BIN/
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Sensitive files
+credentials
+.env
+.envrc
+
+# Python
+*.pyc
+venv
+__pycache__
+
+### Temp files
+*~
+.vagrant
+Gemfile.lock
+node_modules
+*.log
+
+### db files
+*.sqlite
+
+### compiled stuff
+*.class
+*.o
+*.so
+
+### archives
+*.jar
+*.dmg
+*.iso
+*.rar
+*.tar
+*.gz
+*.zip
+*.7z

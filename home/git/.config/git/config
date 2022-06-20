@@ -1,0 +1,47 @@
+# This is Git's per-user configuration file.
+[core]
+  pager         = delta
+
+[color]
+  ui            = true
+  page          = true
+
+[alias]
+  lg            = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  ll            = log --stat --abbrev-commit
+  whatsnew      = fetch --dry-run
+  show          = show --show-signature
+
+[init]
+  defaultBranch = main
+  templateDir   = /Users/ggirault/.git-template
+
+[pull]
+  rebase        = true
+
+[fetch]
+  prune         = true
+  verbose       = true
+
+[status]
+  submoduleSummary = true
+
+[merge]
+  conflictstyle = diff3
+
+[diff]
+  colorMoved    = dimmed-zebra
+
+[interactive]
+  diffFilter    = delta --color-only
+
+[delta]
+  navigate      = true
+  line-numbers  = true
+  side-by-side  = true
+  diff-so-fancy = true
+
+# Include local config if relevant
+
+[include]
+  path          = ~/.gitconfig_local

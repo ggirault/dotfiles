@@ -1,0 +1,11 @@
+bind generic g move-first-line
+bind generic G move-last-line
+
+set diff-highlight = "delta"
+set ignore-case = true
+set line-graphics = utf-8
+set refresh-mode = auto
+set tab-size = 2
+
+set main-view-date = custom
+set main-view-date-format = "%Y-%m-%d %H:%M"
