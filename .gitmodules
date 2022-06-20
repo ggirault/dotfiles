@@ -1,0 +1,3 @@
+[submodule "home/zsh/.config/zsh/plugins/zsh-completions"]
+	path = home/zsh/.config/zsh/plugins/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions

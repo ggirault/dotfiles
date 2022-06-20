@@ -1,0 +1,78 @@
+# Don't print a new line at the start of the prompt
+add_newline = false
+
+format = """\
+    $username\
+    $hostname\
+    $kubernetes\
+    $directory\
+    $git_branch\
+    $git_commit\
+    $git_state\
+    $git_status\
+    $hg_branch\
+    $docker_context\
+    $package\
+    $dotnet\
+    $elixir\
+    $elm\
+    $erlang\
+    $golang\
+    $java\
+    $julia\
+    $nodejs\
+    $php\
+    $python\
+    $ruby\
+    $rust\
+    $terraform\
+    $nix_shell\
+    $conda\
+    $memory_usage\
+    $aws\
+    $env_var\
+    $crystal\
+    $cmd_duration\
+    $custom\
+    $time\
+    $line_break\
+    $jobs\
+    $character\
+"""
+
+[aws]
+style = "yellow"
+
+[battery]
+disable = true
+
+[directory]
+style = "bold fg:220"
+truncation_length = 8
+
+[dotnet]
+disabled = true
+
+[elixir]
+disabled = true
+
+[elm]
+disabled = true
+
+[git_commit]
+only_detached = true
+
+[java]
+disabled = true
+
+[julia]
+disabled = true
+
+[time]
+disabled = false
+style = "fg:246"
+
+[username]
+show_always = true
+style_user = "bold cyan"
+
