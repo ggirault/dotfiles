@@ -2,7 +2,7 @@ fpath=("$ZDOTDIR/plugins/zsh-completions/src" $fpath)
 
 #autoload -Uz compinit; compinit -D
 autoload -Uz compinit
-if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' $ZSH_COMPDUMP) ]; then
+if [[ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' $ZSH_COMPDUMP) ]]; then
   compinit -d $ZSH_COMPDUMP
 else
   compinit -C -d $ZSH_COMPDUMP
