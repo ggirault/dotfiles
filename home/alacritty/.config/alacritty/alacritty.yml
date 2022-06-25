@@ -53,11 +53,11 @@ colors:
 live_config_reload: true
 
 shell:
-#  program: /bin/zsh
-#  args:
-#    - -i
-#    - -c
-#    - "tmux new-session -A -D -s main"
+  program: /bin/zsh
+  args:
+    - -i
+    - -c
+    - "tmux new-session -A -D -s main"
 
 # Send ESC (\x1b) before characters when alt is pressed.
 alt_send_esc: true
