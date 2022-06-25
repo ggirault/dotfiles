@@ -64,32 +64,32 @@ alt_send_esc: true
 
 key_bindings:
   # Vi Mode
-  - { key: V,                           mode: Vi|~Search, action: ToggleNormalSelection   }
-  - { key: V,      mods: Shift,         mode: Vi|~Search, action: ToggleLineSelection     }
-  - { key: V,      mods: Control,       mode: Vi|~Search, action: ToggleBlockSelection    }
-  - { key: V,      mods: Alt,           mode: Vi|~Search, action: ToggleSemanticSelection }
+  #- { key: V,                           mode: Vi|~Search, action: ToggleNormalSelection   }
+  #- { key: V,      mods: Shift,         mode: Vi|~Search, action: ToggleLineSelection     }
+  #- { key: V,      mods: Control,       mode: Vi|~Search, action: ToggleBlockSelection    }
+  #- { key: V,      mods: Alt,           mode: Vi|~Search, action: ToggleSemanticSelection }
 
-  - { key: Key0,           mods: Command,                    action: ResetFontSize         }
-  - { key: Equals,         mods: Command,                    action: IncreaseFontSize      }
-  - { key: Plus,           mods: Command,                    action: IncreaseFontSize      }
-  - { key: NumpadAdd,      mods: Command,                    action: IncreaseFontSize      }
-  - { key: Minus,          mods: Command,                    action: DecreaseFontSize      }
-  - { key: NumpadSubtract, mods: Command,                    action: DecreaseFontSize      }
-  - { key: V,              mods: Command,                    action: Paste                 }
-  - { key: C,              mods: Command,                    action: Copy                  }
-  #- { key: C,              mods: Command, mode: Vi|~Search,  action: ClearSelection        }
-  #- { key: H,              mods: Command,                    action: Hide                  }
-  #- { key: H,              mods: Command|Alt,                action: HideOtherApplications }
-  #- { key: M,              mods: Command,                    action: Minimize              }
-  - { key: Q,              mods: Command,                    action: Quit                  }
-  #- { key: W,              mods: Command,                    action: Quit                  }
-  #- { key: N,              mods: Command,                    action: SpawnNewInstance      }
-  #- { key: F,              mods: Command|Control,            action: ToggleFullscreen      }
-  #- { key: F,              mods: Command, mode: ~Search,     action: SearchForward         }
-  #- { key: B,              mods: Command, mode: ~Search,     action: SearchBackward        }
+  - { key: Space,          mods: Alt,           chars: " "                     }
+    #  - { key: Back,           mods: Super,         chars: "\x15"                        } # delete word/line
+    #  - { key: Left,           mods: Command,       chars: "\x1bOH",   mode: AppCursor   } # Home
+    #  - { key: Right,          mods: Command,       chars: "\x1bOF",   mode: AppCursor   } # End
 
-  - { key: Left,           mods: Alt,                        chars: "\x1bb",   mode: ~Vi    } # one word left
-  - { key: Right,          mods: Alt,                        chars: "\x1bf",   mode: ~Vi    } # one word right
+  - { key: Key0,           mods: Command,                           action: ResetFontSize         }
+  - { key: Equals,         mods: Command,                           action: IncreaseFontSize      }
+  - { key: Plus,           mods: Command,                           action: IncreaseFontSize      }
+  - { key: NumpadAdd,      mods: Command,                           action: IncreaseFontSize      }
+  - { key: Minus,          mods: Command,                           action: DecreaseFontSize      }
+  - { key: NumpadSubtract, mods: Command,                           action: DecreaseFontSize      }
+  - { key: B,              mods: Command,        mode: ~Search,     action: SearchBackward        }
+  - { key: C,              mods: Command,                           action: Copy                  }
+  - { key: F,              mods: Command,        mode: ~Search,     action: SearchForward         }
+  - { key: F,              mods: Command|Shift,  mode: ~Search,     action: SearchBackward        }
+  - { key: Q,              mods: Command,                           action: Quit                  }
+  - { key: N,              mods: Command,                           action: CreateNewWindow       }
+  - { key: N,              mods: Command|Shift,                     action: SpawnNewInstance      }
+  - { key: V,              mods: Command,                           action: Paste                 }
+  - { key: W,              mods: Command,                           action: Quit                  }
+
 
   # (tmux personal)
   - { key: R,     mods: Command,       command: { program: "/usr/local/bin/tmux", args: ["rename-window"] }   } # rename-window
@@ -114,6 +114,4 @@ key_bindings:
   - { key: Down,  mods: Command|Shift, chars: "\x02\x4a"   } # resize-pane down (C-b J)
 
   # Fix Alt-c
-  - { key: A,   mods: Alt, chars: "\x1ba"   }
-  - { key: C,   mods: Alt, chars: "\x1bc"   }
-  - { key: T,   mods: Alt, chars: "\x1bt"   }
+  #- { key: C,   mods: Alt, chars: "\x1bc"   }
