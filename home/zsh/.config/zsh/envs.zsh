@@ -6,22 +6,29 @@ export LANGUAGE='en_US.UTF-8'
 
 export DOTFILES="$HOME/.dotfiles"
 
-# editor
-if [ -n "${commands[nvim]}" ]; then
-  export EDITOR=nvim
-elif [ -n "${commands[vim]}" ]; then
-  export EDITOR=vim
-else
-  export EDITOR=vi
-fi
-export USE_EDITOR="$EDITOR"
-export VISUAL="$EDITOR"
+# homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+export HOMEBREW_NO_INSECURE_REDIRECT=1
+export HOMEBREW_CASK_OPTS="--appdir='$HOME/Applications' --require-sha"
 
 # zsh
 export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump"
 export HISTFILE="$XDG_CACHE_HOME/zsh/.zsh_history"
 export HISTSIZE=10000
 export SAVEHIST=9000
+
+# editor
+if [[ -n "${commands[nvim]}" ]]; then
+  export EDITOR"=nvim"
+elif [[ -n "${commands[vim]}" ]]; then
+  export EDITOR="vim"
+else
+  export EDITOR="vi"
+fi
+export USE_EDITOR="$EDITOR"
+export VISUAL="$EDITOR"
 
 # Man pages
 export MANPAGER='nvim +Man!'
@@ -75,10 +82,3 @@ export FZF_CTRL_T_OPTS=" \
 export FZF_ALT_C_OPTS="--prompt 'Directories> ' --preview-window=down,80%"
 # CTRL-R's options
 export FZF_CTRL_R_OPTS="--layout=default --preview-window=down,3,:nohidden:wrap"
-
-# homebrew
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
-export HOMEBREW_NO_ANALYTICS=1
-export HOMEBREW_NO_INSECURE_REDIRECT=1
-export HOMEBREW_CASK_OPTS="--appdir='$HOME/Applications' --require-sha"
