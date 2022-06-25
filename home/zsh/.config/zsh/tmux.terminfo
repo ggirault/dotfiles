@@ -1,3 +1,6 @@
 # install with `tic tmux.terminfo`
+tmux|tmux terminal emulator,
+    use=alacritty,
+
 tmux-256color|screen with 256 colors and italic,
-        use=alacritty,
+    use=tmux,

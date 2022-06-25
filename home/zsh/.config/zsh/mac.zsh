@@ -11,6 +11,6 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 # fast-syntax-hightlighting
 source $(brew --prefix)/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
-if ! infocmp $TERM > /dev/null 2>&1; then
-  tic tmux.terminfo
+if ! infocmp tmux > /dev/null 2>&1; then
+  tic -ax "$ZDOTDIR"/tmux.terminfo
 fi
