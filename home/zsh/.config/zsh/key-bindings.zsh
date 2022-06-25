@@ -1,3 +1,10 @@
+# Setting EDITOR will change ZSH default behavior. Switch zsh bindings back to
+# emacs key binding
+bindkey -e
+
+# show all terminfo array:
+# $ printf '%q => %q\n' "${(@kv)terminfo}"
+#
 # source: https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/key-bindings.zsh
 # Make sure that the terminal is in application mode when zle is active, since
 # only then values from $terminfo are valid
@@ -12,8 +19,13 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   zle -N zle-line-finish
 fi
 
-# Use emacs key bindings
-bindkey -e
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+[[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   up-line-or-beginning-search
+[[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
 
 typeset -gA keys=(
     Esc                  '\e'
@@ -113,40 +125,30 @@ typeset -gA keys=(
     Ctrl+Alt+Shift+PageUp    '^[[5;8~'
     Ctrl+Alt+Shift+PageDown  '^[[6;8~'
     Ctrl+Alt+Shift+Backspace '^?'
-  )
+)
 
 bindkey -- "${keys[Home]}"             beginning-of-line
 bindkey -- "${keys[End]}"              end-of-line
-bindkey -- "${keys[Insert]}"           overwrite-mode
 bindkey -- "${keys[Backspace]}"        backward-delete-char
-bindkey -- "${keys[Delete]}"           delete-char
-#bindkey -- "${keys[Up]}"               up-line-or-history
-#bindkey -- "${keys[Down]}"             down-line-or-history
-bindkey -- "${keys[Left]}"             backward-char
-bindkey -- "${keys[Right]}"            forward-char
-bindkey -- "${keys[Shift+Tab]}"        reverse-menu-complete
-bindkey -- "${keys[Ctrl+Left]}"        backward-word
-bindkey -- "${keys[Ctrl+Right]}"       forward-word
-bindkey -- "${keys[Ctrl+Delete]}"      kill-word
-bindkey -- "${keys[PageUp]}"           up-line-or-history
-bindkey -- "${keys[PageDown]}"         down-line-or-history
+#bindkey -- "${keys[Insert]}"           overwrite-mode
+#bindkey -- "${keys[Delete]}"           delete-char
+#bindkey -- "${keys[Left]}"             backward-char
+#bindkey -- "${keys[Right]}"            forward-char
+#bindkey -- "${keys[PageUp]}"           up-line-or-history
+#bindkey -- "${keys[PageDown]}"         down-line-or-history
 
-autoload -U up-line-or-beginning-search
-zle -N up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N down-line-or-beginning-search
-#
-#bindkey -- '^[OA' up-line-or-beginning-search
-#bindkey -- "${keys[Up]}" up-line-or-beginning-search
-#bindkey -- '^[OB' down-line-or-beginning-search
+#bindkey -- "${keys[Ctrl+Left]}"        backward-word
+#bindkey -- "${keys[Ctrl+Right]}"       forward-word
+#bindkey -- "${keys[Ctrl+Delete]}"      kill-word
 
-bindkey -- "${key[Up]}"                up-line-or-beginning-search
-bindkey -- "${key[Down]}"              down-line-or-beginning-search
+bindkey -- "${keys[Alt+Left]}"         backward-word
+bindkey -- "${keys[Alt+Right]}"        forward-word
 bindkey -- "${keys[Alt+Up]}"           up-line-or-history
 bindkey -- "${keys[Alt+Down]}"         down-line-or-history
+bindkey -- "${keys[Alt+Delete]}"       kill-word
 
-bindkey ' ' magic-space                               # [Space] - don't do history expansion
-bindkey "^?" backward-delete-char                     # delete the character behind the cursor
-bindkey '^[w' kill-region                             # [C-w] - Kill from the cursor to the mark
+bindkey -- "${keys[Shift+Tab]}"        reverse-menu-complete
 
-bindkey -M menuselect '${keys[Esc]}"' send-break      # quit completion on escape
+##bindkey '^[w' kill-region                             # [C-w] - Kill from the cursor to the mark
+
+#bindkey -M menuselect '${keys[Esc]}"' send-break      # quit completion on escape
