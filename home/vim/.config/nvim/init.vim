@@ -99,6 +99,9 @@ set mouse=a                     "Enable mouse in all mode
 set list
 set listchars=tab:→\ ,trail:·,nbsp:·,precedes:«,extends:»,eol:¶
 
+highlight TrailingChars guifg=red ctermfg=red
+match TrailingChars /\t*$\| /
+
 set wrap                        "Wrap lines
 set linebreak                   "Wrap lines at convenient points
 
