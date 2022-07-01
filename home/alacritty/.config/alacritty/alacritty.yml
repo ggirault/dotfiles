@@ -1,5 +1,5 @@
 import:
-  - ~/alacritty_local.yml
+  - ~/.alacritty_local.yml
 
 env:
   TERM: alacritty
