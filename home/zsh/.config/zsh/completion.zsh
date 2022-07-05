@@ -12,6 +12,9 @@ fi
 
 zmodload zsh/complist
 
+# Enable regex moving
+autoload -U zmv
+
 # Ztyle pattern
 # :completion:<function>:<completer>:<command>:<argument>:<tag>
 
