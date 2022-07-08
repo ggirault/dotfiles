@@ -1,7 +1,7 @@
 # source: https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/directories.zsh
 
 # zsh
-alias reload!='source ~/.zshrc'
+alias reload!='source $ZDOTDIR/.zshrc'
 
 # directory
 alias -g ...='../..'
