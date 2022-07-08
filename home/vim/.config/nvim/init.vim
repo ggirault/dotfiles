@@ -84,7 +84,7 @@ set cursorline
 
 " ================ Mouse ======================
 
-set mouse=a                     "Enable mouse in all mode
+set mouse=nv                     "Enable mouse in Normal and Visual modes
 
 " ================ Editing UI ======================
 
