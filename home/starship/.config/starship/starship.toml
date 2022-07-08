@@ -11,30 +11,17 @@ $git_commit\
 $git_state\
 $git_metrics\
 $git_status\
-$hg_branch\
 $docker_context\
 $package\
-$dotnet\
-$elixir\
-$elm\
-$erlang\
 $golang\
-$java\
-$julia\
 $nodejs\
-$php\
 $python\
 $ruby\
 $rust\
-$terraform\
-$nix_shell\
-$conda\
-$memory_usage\
 $aws\
 $env_var\
-$crystal\
-$cmd_duration\
 $custom\
+$cmd_duration\
 $time\
 $line_break\
 $jobs\
@@ -42,41 +29,23 @@ $character\
 """
 
 [aws]
-disabled = true
+disabled = false
 format='on [$symbol($profile )(\($region\) )(\[$duration\])]($style)'
-
-[cmd_duration]
-style = "bold white"
 
 [git_metrics]
 disabled = false
 
-[battery]
-disable = true
+[cmd_duration]
+#style = "bold white"
+min_time = 500
 
 [directory]
 #style = "bold fg:220"
 style = "bold yellow"
 truncation_length = 8
 
-[dotnet]
-disabled = true
-
-[elixir]
-disabled = true
-
-[elm]
-disabled = true
-
 [git_commit]
-#only_detached = true
 only_detached = false
-
-[java]
-disabled = true
-
-[julia]
-disabled = true
 
 [time]
 disabled = false
@@ -85,8 +54,3 @@ style = "fg:246"
 [username]
 show_always = true
 style_user = "bold cyan"
-
-[terraform]
-disabled = true
-version_format = "tf v${raw}"
-format = "via [$version]($style) "
