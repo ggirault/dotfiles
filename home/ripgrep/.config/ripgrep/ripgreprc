@@ -13,7 +13,7 @@
 --glob=!tmp/*
 
 # Set the colors.
---color=always
+--color=auto
 --colors=line:style:bold
 --colors=match:fg:yellow
 --colors=line:fg:cyan

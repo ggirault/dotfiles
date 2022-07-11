@@ -19,13 +19,3 @@ extract () {
        echo "'$1' is not a valid file"
    fi
 }
-
-# Find in file
-fif () {
-    if [ ! "$#" -gt 0 ]
-    then
-        echo "Need a string to search for!"
-        return 1
-    fi
-    rg --files-with-matches --hidden --no-ignore --glob="!.git/" --no-messages "$1" | fzf $FZF_PREVIEW_WINDOW --preview "rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' {}"
-}
