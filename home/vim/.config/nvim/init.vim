@@ -16,7 +16,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'morhetz/gruvbox'
 
-
 " Edit
 Plug 'sgur/vim-editorconfig'
 Plug 'junegunn/rainbow_parentheses.vim'
@@ -29,11 +28,6 @@ Plug 'hashivim/vim-terraform'
 
 " Powerline alternative
 Plug 'vim-airline/vim-airline'
-
-" NerdTree
-Plug 'preservim/nerdtree'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 call plug#helptags()
@@ -215,61 +209,3 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " Search for visually selected text
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
-
-" NERDTree
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n>     :NERDTree<CR>
-nnoremap <C-t>     :NERDTreeToggle<CR>
-nnoremap <C-f>     :NERDTreeFind<CR>
-
-" Start NERDTree when Vim starts with a directory argument.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
-    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
-" Close the tab if NERDTree is the only window remaining in it.
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-
-let g:NERDTreeShowHidden = 1 
-let g:NERDTreeStatusline = '' " set to empty to use lightline
-let g:NERDTreeHighlightFolders = 1 " Enables folder icon highlighting using exact match
-let g:NERDTreeHighlightFoldersFullName = 1 " Highlights the folder name
-
-
-let s:brown = "905532"
-let s:aqua =  "3AFFDB"
-let s:blue = "689FB6"
-let s:darkBlue = "44788E"
-let s:purple = "834F79"
-let s:lightPurple = "834F79"
-let s:red = "AE403F"
-let s:beige = "F5C06F"
-let s:yellow = "F09F17"
-let s:orange = "D4843E"
-let s:darkOrange = "F16529"
-let s:pink = "CB6F6F"
-let s:salmon = "EE6E73"
-let s:green = "8FAA54"
-let s:lightGreen = "31B53E"
-let s:white = "FFFFFF"
-let s:rspec_red = 'FE405F'
-let s:git_orange = 'F54D27'
-
-let g:NERDTreeExactMatchHighlightColor = {} 
-let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange 
-let g:WebDevIconsDefaultFolderSymbolColor = s:beige 
-let g:WebDevIconsDefaultFileSymbolColor = s:blue 
-
-
-"let g:WebDevIconsDisableDefaultFolderSymbolColorFromNERDTreeDir = 1
-"let g:WebDevIconsDisableDefaultFileSymbolColorFromNERDTreeFile = 1
-"
-"let g:NERDTreeDisableFileExtensionHighlight = 1
-"let g:NERDTreeDisableExactMatchHighlight = 1
-"let g:NERDTreeDisablePatternMatchHighlight = 1
-"
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
-"
-"let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
-"let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
