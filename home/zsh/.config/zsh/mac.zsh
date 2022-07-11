@@ -4,7 +4,7 @@ export SHELL_SESSIONS_DISABLE=1
 
 # ZSH autosuggestion
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#777,underline'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=063,underline'
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=40
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
