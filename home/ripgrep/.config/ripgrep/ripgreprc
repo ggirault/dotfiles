@@ -1,0 +1,26 @@
+# Don't print lines longer than this limit in bytes. Longer lines are omitted,
+# and only the number of matches in that line is printed.
+--max-columns=150
+
+# Show a preview for long lines.
+--max-columns-preview
+
+# Files/folders to ignore
+--glob=!.cache/*
+--glob=!.git/*
+--glob=!Library/*
+--glob=!Public/*
+--glob=!tmp/*
+
+# Set the colors.
+--color=always
+--colors=line:style:bold
+--colors=match:fg:yellow
+--colors=line:fg:cyan
+--colors=path:fg:green
+
+# Searches case insensitively if the pattern is all lowercase.
+# Search case sensitively otherwise.
+--smart-case
+--hidden
+--heading
