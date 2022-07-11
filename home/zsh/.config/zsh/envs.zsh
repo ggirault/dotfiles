@@ -58,6 +58,9 @@ export LESSHISTFILE="$XDG_CACHE_HOME/lesshst"
 export LESSSECURE=1
 export PAGER=less
 
+# ripgrep
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/ripgreprc"
+
 # fzf
 export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git'"
 # default options
