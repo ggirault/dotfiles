@@ -2,6 +2,7 @@
 
 # zsh
 alias reload!='source $ZDOTDIR/.zshrc'
+alias less='zless'
 
 # directory
 alias -g ...='../..'

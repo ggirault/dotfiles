@@ -40,7 +40,18 @@ less_options=(
     # Do not automatically wrap long lines.
     --chop-long-lines
     # Allow ANSI colour escapes, but no other escapes.
-    --raw-control-chars
+    --RAW-CONTROL-CHARS
+    # Causes less to prompt event more verbosely than more
+    --LONG-PROMPT
+    # Supresses line numbers
+    --line-numbers
+    # Highlight only the particular string
+    --hilite-search
+    # Disable termcap initialization
+    --no-init
+    # Enables scrolling with the mouse wheel
+    --mouse
+    --wheel-lines=3
 );
 export LESS="${less_options[*]}"
 export LESSHISTFILE="$XDG_CACHE_HOME/lesshst"
