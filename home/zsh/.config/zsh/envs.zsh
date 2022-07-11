@@ -62,37 +62,47 @@ export PAGER=less
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/ripgreprc"
 
 # fzf
-export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git'"
+FZF_FILE_PREVIEW="([[ -f {} ]] && (bat --style=numbers --color=always --line-range :500 -- {} || cat {}))"
+FZF_DIR_PREVIEW="([[ -d {} ]] && (tree -C {} | less))"
+
+export FZF_DEFAULT_COMMAND="(git ls-tree -r --name-only HEAD || 
+    rg --files --no-ignore --hidden -g '!{.git,node_modules,target}/*') 2> /dev/null"
 # default options
-export FZF_DEFAULT_OPTS=" \
---border \
---info=inline \
---multi \
---preview-window=:nohidden:wrap \
---preview '([[ -f {} ]] && (bat --style=numbers --color=always --line-range :500 {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200' \
---prompt='∼ ' --pointer='▶' --marker='✓' \
---color=hl+:#ff00ff,preview-bg:#292924 \
---bind '?:toggle-preview' \
---bind 'ctrl-a:select-all' \
---bind 'ctrl-t:toggle-all' \
---bind 'alt-c:deselect-all' \
---bind 'ctrl-y:execute-silent(echo {+} | pbcopy)' \
---bind 'ctrl-e:execute(echo {+} | xargs -o vim)' \
---bind 'ctrl-v:execute(code {+})' \
---bind 'pgup:half-page-up' \
---bind 'pgdn:half-page-down' \
---bind 'shift-up:preview-page-up' \
---bind 'shift-down:preview-page-down' \
+export FZF_DEFAULT_OPTS="
+--border 
+--info=inline 
+--multi 
+--cycle 
+--preview-window=:nohidden:wrap,right:60% 
+--preview '($FZF_FILE_PREVIEW || $FZF_DIR_PREVIEW) 2>/dev/null | head -200' 
+--prompt='∼ ' --pointer='▶' --marker='✓' 
+--color=hl+:#ff00ff,preview-bg:#292924 
+--bind '?:toggle-preview,alt-w:toggle-preview-wrap' 
+--bind 'ctrl-a:select-all' 
+--bind 'ctrl-t:toggle-all'
+--bind 'ctrl-s:toggle-sort'
+--bind 'alt-c:deselect-all' 
+--bind 'ctrl-y:execute-silent(echo {+} | pbcopy)' 
+--bind 'ctrl-e:execute(echo {+} | xargs -o vim)' 
+--bind 'ctrl-v:execute(code {+})' 
+--bind 'pgup:half-page-up' 
+--bind 'pgdn:half-page-down' 
+--bind 'shift-up:preview-page-up' 
+--bind 'shift-down:preview-page-down' 
 "
+# CTRL-T command
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # CTRL-T's options
-export FZF_CTRL_T_OPTS=" \
---preview-window=60% \
---prompt 'All> ' \
---header 'CTRL-D: Directories / CTRL-F: Files' \
---bind 'ctrl-d:change-prompt(Directories> )+reload($FZF_DEFAULT_COMMAND --type d)' \
---bind 'ctrl-f:change-prompt(Files> )+reload($FZF_DEFAULT_COMMAND --type f --type e --type l)' \
+export FZF_CTRL_T_OPTS=" 
+--preview-window=60% 
+--prompt 'All> ' 
+--header 'CTRL-D: Directories / CTRL-F: Files' 
+--bind 'ctrl-d:change-prompt(Directories> )+reload($FZF_DEFAULT_COMMAND --type d)' 
+--bind 'ctrl-f:change-prompt(Files> )+reload($FZF_DEFAULT_COMMAND --type f --type e --type l)' 
 "
+export FZF_ALT_C_COMMAND="fd --no-ignore --hidden --follow --strip-cwd-prefix --exclude '.git' --type d"
 # ALT-C's options
-export FZF_ALT_C_OPTS="--prompt 'Directories> ' --preview-window=down,80%"
+export FZF_ALT_C_OPTS="--prompt 'Directories> ' --preview '$FZF_DIR_PREVIEW' --preview-window=down,60%"
 # CTRL-R's options
 export FZF_CTRL_R_OPTS="--layout=default --preview-window=down,3,:nohidden:wrap"
+export FZF_TMUX=1
