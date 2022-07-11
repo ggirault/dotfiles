@@ -6,7 +6,7 @@ env:
 
 window:
   padding:
-   x: 4
+   x: 1
   dynamic_padding: false
   opacity: 0.95
   startup_mode: Maximized
