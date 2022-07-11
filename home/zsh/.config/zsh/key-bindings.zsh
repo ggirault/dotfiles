@@ -28,6 +28,19 @@ zle -N down-line-or-beginning-search
 [[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
 
 typeset -gA keys=(
+    F1                   '^[OP'
+    F2                   '^[OQ'
+    F3                   '^[OR'
+    F4                   '^[OS'
+    F5                   '^[[15~'
+    F6                   '^[[17~'
+    F7                   '^[[18~'
+    F8                   '^[[19~'
+    F9                   '^[[20~'
+    F10                  '^[[21~'
+    F11                  '^[[23~'
+    F12                  '^[[24~'
+
     Esc                  '\e'
     Up                   '^[[A'
     Down                 '^[[B'
@@ -131,7 +144,7 @@ bindkey -- "${keys[Home]}"             beginning-of-line
 bindkey -- "${keys[End]}"              end-of-line
 bindkey -- "${keys[Backspace]}"        backward-delete-char
 #bindkey -- "${keys[Insert]}"           overwrite-mode
-#bindkey -- "${keys[Delete]}"           delete-char
+bindkey -- "${keys[Delete]}"           delete-char
 #bindkey -- "${keys[Left]}"             backward-char
 #bindkey -- "${keys[Right]}"            forward-char
 #bindkey -- "${keys[PageUp]}"           up-line-or-history
