@@ -1,16 +1,9 @@
-fpath=("$ZDOTDIR/plugins/zsh-completions/src" $fpath)
-
-#autoload -Uz compinit; compinit -D
-autoload -Uz compinit
-if [[ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' $ZSH_COMPDUMP) ]]; then
-  compinit -d $ZSH_COMPDUMP
-else
-  compinit -C -d $ZSH_COMPDUMP
-fi
+#fpath=("$ZDOTDIR/plugins/zsh-completions/src" $fpath)
+fpath+="${0:A:h}/plugins/zsh-completions/src"
 
 #_comp_options+=(globdots)       # with hidden files
 
-zmodload zsh/complist
+zmodload -i zsh/complist
 
 # Enable regex moving
 autoload -U zmv
@@ -18,50 +11,94 @@ autoload -U zmv
 # Ztyle pattern
 # :completion:<function>:<completer>:<command>:<argument>:<tag>
 
+# auto rehash commands
+# http://www.zsh.org/mla/users/2011/msg00531.html
+zstyle ':completion:*' rehash true
+
 # Define completers
-zstyle ':completion:*' completer _extensions _complete
-# Allow you to select in a menu
-zstyle ':completion:*:*:*:*:*' menu select
-# Case sensitive (all), partial-word and substring completion
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' completer _complete _prefix _ignored
+#zstyle ':completion:*' completer _complete _match _prefix _correct
+
+zstyle ':completion:*:prefix-complete:*' completer _complete
+# Configure the match completer, more flexible of GLOB_COMPLETE
+# with original set to only it doesn't act like a `*' was inserted at the cursor position
+zstyle ':completion:*:match:*' original only
+# Correction will accept up to one error. If a numeric argument is given, correction will not be performed
+zstyle ':completion:*:correct:*' max-errors 1 not-numeric
+#zstyle ':completion:*:prefix-approximate:*' completer _approximate
+
+
+# First case insensitive completion, then case-sensitive partial-word completion, then case-insensitive partial-word completion
+# (with -_. as possible anchors)
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[-_.]=* r:|=*' 'm:{a-z}={A-Z} r:|[-_.]=* r:|=*'
+
+# Allow 2 errors in correct completer
+zstyle ':completion:*:correct:*' max-errors 2 not-numeric
+
+# Menu selection
+zstyle ':completion:*' menu select # Allow you to select in a menu
+
+# Colors for all completions
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+autoload -Uz colors && colors
+
+# Messages/warnings format
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:options' description 'yes' #
+zstyle ':completion:*:options' auto-description 'yes'
+zstyle ':completion:*:corrections' format '%F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:descriptions' format '%F{yellow}-- %D %d --%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+zstyle ':completion:*:default' select-prompt '%SScrolling active: current selection at %p%s'
+# Required for completion to be in good groups (named after the tags)
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:matches' group 'yes' # Separate matches into groups
+# Show message while waiting for completion
+zstyle ':completion:*' show-completer true
+
+# Smart completion of . and ..
+zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
+
 # Use cache for commands using cache
 zstyle ':completion:*' use-cache yes
-zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+zstyle ':completion:*' cache-path "$ZSH_CACHE_DIR"
 
-# Complete . and .. special directories
-zstyle ':completion:*' special-dirs true
-
-zstyle ':completion:*' verbose yes
-# Colors for files and directory
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-# Sort by modification date
-zstyle ':completion:*' file-sort modification
-
-zstyle ':completion:*:*:*:*:processes' command 'ps -u $USERNAME -o pid,user,comm -w -w'
-zstyle ':completion:*:*:kill:*' menu yes select
-zstyle ':completion:*:kill:*' force-list always
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-zstyle ':completion:*:*:killall:*' menu yes select
-zstyle ':completion:*:killall:*' force-list always
+# Display order of commands
+zstyle ':completion:*:*:-command-:*:*' group-order aliases functions builtins commands
 
 # Group manpages manual.X
 zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:manuals.(^1*)' insert-sections true
+zstyle ':completion:*:man:*' menu yes select
 
-# Disable named-directories autocompletion
+# Kill
+zstyle ':completion:*:*:*:*:processes' command 'ps -u $USERNAME -o pid,user,args -w -w'
+zstyle ':completion:*:*:*:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+zstyle ':completion:*:*:*:*:processes' force-list always
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:*:kill:*' insert-ids single
+zstyle ':completion:*:*:killall:*' menu yes select
+
+# Ignore completion functions for commands you don't have:
+zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec)|TRAP*)'
+# Don't complete backup files as executables
+zstyle ':completion:*:complete:-command-::commands' ignored-patterns '*\~'
+
+#zstyle ':completion:*' file-sort modification reverse
 zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
-
-# Group results
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*:*:-command-:*:*' group-order aliases builtins functions commands
-
-# Keep the string ‘~/f*’ would be expanded to ‘~/foo’ instead of ‘/home/user/foo’
+# complete 'cd -<tab>' with menu
+zstyle ':completion:*:cd:*:directory-stack' menu yes select
+zstyle ':completion:*:-tilde-:*' group-order named-directories path-directories users expand
+# Do not assume multiple slashes mean multiple directories (fo//ba is fo/ba not fo/*/ba)
+zstyle ':completion:*' squeeze-slashes true
+# Try to keep a prefix containing a tilde or parameter expansion like ‘~/f*’ would be expanded to ‘~/foo’ instead of ‘/home/user/foo’
 zstyle ':completion:*' keep-prefix true
 
-zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
-zstyle ':completion:*:*:*:*:descriptions' format '%F{blue}-- %D %d --%f'
-zstyle ':completion:*:*:*:*:messages' format ' %F{purple} -- %d --%f'
-zstyle ':completion:*:*:*:*:warnings' format ' %F{red}-- no matches found --%f'
+# ignore uninteresting hosts
+zstyle ':completion:*:*:*:hosts' ignored-patterns \
+    localhost loopback ip6-localhost ip6-loopback localhost6 localhost6.localdomain6 localhost.localdomain
 
 # Expand alias
 zle -C alias-expension complete-word _generic
@@ -77,4 +114,19 @@ select-word-style bash
 # ... but don't stop on these characeters
 zstyle ':zle:*' word-chars '.-'
 
-#compdef '_files -g "*.tgz *.gz *.tbz2 *.bz2 *.tar *.rar *.zip *.Z *.7z *.xz *.lzma *.lha *.rpm *.deb"' extract_archive
+# A newly added command will may not be found or will cause false
+# correction attempts, if you got auto-correction set. By setting the
+# following style, we force accept-line() to rehash, if it cannot
+# find the first word on the command line in the $command[] hash.
+zstyle ':acceptline:*' rehash true
+
+#autoload -Uz compinit; compinit -D
+autoload -Uz compinit
+if [[ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' $ZSH_COMPDUMP) ]]; then
+  compinit -i -d $ZSH_COMPDUMP
+else
+  compinit -C -i -d $ZSH_COMPDUMP
+fi
+
+# load bashcompinit for some old bash completions
+autoload -U +X bashcompinit && bashcompinit

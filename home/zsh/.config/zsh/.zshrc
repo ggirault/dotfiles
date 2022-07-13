@@ -41,8 +41,6 @@ unset custom_config_file
 fpath=("$ZDOTDIR/lib" $fpath)
 autoload -Uz $ZDOTDIR/lib/*(:t)
 
-autoload -Uz colors && colors
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # zsh profiling

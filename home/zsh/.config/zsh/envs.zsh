@@ -14,10 +14,13 @@ export HOMEBREW_NO_INSECURE_REDIRECT=1
 export HOMEBREW_CASK_OPTS="--appdir='$HOME/Applications' --require-sha"
 
 # zsh
-export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump"
-export HISTFILE="$XDG_CACHE_HOME/zsh/.zsh_history"
-export HISTSIZE=10000
-export SAVEHIST=9000
+export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+mkdir -p $ZSH_CACHE_DIR
+export ZSH_COMPDUMP="$ZSH_CACHE_DIR/zcompdump"
+typeset -g HISTFILE="$ZSH_CACHE_DIR/zsh_history"
+typeset -g HIST_STAMPS="yyyy-mm-dd"
+typeset -g SAVEHIST=1000000
+typeset -g HISTSIZE=$(( 1.2 * SAVEHIST ))
 
 # editor
 if [[ -n "${commands[nvim]}" ]]; then

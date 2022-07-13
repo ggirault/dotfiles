@@ -140,6 +140,11 @@ typeset -gA keys=(
     Ctrl+Alt+Shift+Backspace '^?'
 )
 
+# https://sgeb.io/posts/zsh-zle-custom-widgets/
+# Test a widget interactively: execute-named-cmd (Alt-x)
+# List all widgets: zsl -la
+bindkey -- "^Hc" describe-key-briefly
+
 bindkey -- "${keys[Home]}"             beginning-of-line
 bindkey -- "${keys[End]}"              end-of-line
 bindkey -- "${keys[Backspace]}"        backward-delete-char
@@ -164,4 +169,4 @@ bindkey -- "${keys[Shift+Tab]}"        reverse-menu-complete
 
 ##bindkey '^[w' kill-region                             # [C-w] - Kill from the cursor to the mark
 
-#bindkey -M menuselect '${keys[Esc]}"' send-break      # quit completion on escape
+bindkey -M menuselect "${keys[Esc]}"   send-break      # quit completion on escape
