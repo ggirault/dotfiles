@@ -39,7 +39,7 @@ done
 unset custom_config_file
 
 # Load all of your custom configurations from custom/
-for config_file ("$ZSHDOTDIR"/custom/*.zsh(N)); do
+for config_file ("$ZDOTDIR"/custom/*.zsh(N)); do
   source "$config_file"
 done
 unset config_file
