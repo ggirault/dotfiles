@@ -22,15 +22,23 @@ zstyle ':completion:*' completer _complete _prefix _ignored
 zstyle ':completion:*:prefix-complete:*' completer _complete
 # Configure the match completer, more flexible of GLOB_COMPLETE
 # with original set to only it doesn't act like a `*' was inserted at the cursor position
-zstyle ':completion:*:match:*' original only
+#zstyle ':completion:*:match:*' original only
 # Correction will accept up to one error. If a numeric argument is given, correction will not be performed
 zstyle ':completion:*:correct:*' max-errors 1 not-numeric
 #zstyle ':completion:*:prefix-approximate:*' completer _approximate
 
+zstyle '*' single-ignored show
 
 # First case insensitive completion, then case-sensitive partial-word completion, then case-insensitive partial-word completion
 # (with -_. as possible anchors)
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[-_.]=* r:|=*' 'm:{a-z}={A-Z} r:|[-_.]=* r:|=*'
+#zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[-_.]=* r:|=*' 'm:{a-z}={A-Z} r:|[-_.]=* r:|=*'
+# First case insensitive completion, then case-sensitive partial-word completion (word*), then case-insensitive partial-word completion (WoRd*)
+#zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'm:{a-zA-Z}={A-Za-z} r:|=*'
+
+# First case insensitive completion (when in lowercase but not the opposite)
+# then case-sensitive partial-word completion (word*)
+# then case sensitive partial-word completion (*word)
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|=*' 'l:|=*'
 
 # Allow 2 errors in correct completer
 zstyle ':completion:*:correct:*' max-errors 2 not-numeric
@@ -43,20 +51,22 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 autoload -Uz colors && colors
 
 # Messages/warnings format
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*:options' description 'yes' #
-zstyle ':completion:*:options' auto-description 'yes'
+zstyle ':completion:*' verbose true
 zstyle ':completion:*:corrections' format '%F{green}-- %d (errors: %e) --%f'
 zstyle ':completion:*:descriptions' format '%F{yellow}-- %D %d --%f'
 zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 zstyle ':completion:*:default' select-prompt '%SScrolling active: current selection at %p%s'
+# Scroll completion list by half-screenfuls
+zstyle ':completion:*:default' select-scroll 0
+# Generate description with magic
+zstyle ':completion:*' auto-description 'specify: %d'
 # Required for completion to be in good groups (named after the tags)
 zstyle ':completion:*' group-name ''
-zstyle ':completion:*:matches' group 'yes' # Separate matches into groups
+#zstyle ':completion:*:matches' group 'yes' # Separate matches into groups
 # Show message while waiting for completion
-zstyle ':completion:*' show-completer true
+#zstyle ':completion:*' show-completer true
 
 # Smart completion of . and ..
 zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
@@ -66,7 +76,7 @@ zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' cache-path "$ZSH_CACHE_DIR"
 
 # Display order of commands
-zstyle ':completion:*:*:-command-:*:*' group-order aliases functions builtins commands
+zstyle ':completion:*:*:-command-:*:*' group-order aliases functions commands builtins
 
 # Group manpages manual.X
 zstyle ':completion:*:manuals' separate-sections true
@@ -75,11 +85,13 @@ zstyle ':completion:*:man:*' menu yes select
 
 # Kill
 zstyle ':completion:*:*:*:*:processes' command 'ps -u $USERNAME -o pid,user,args -w -w'
-zstyle ':completion:*:*:*:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 zstyle ':completion:*:*:*:*:processes' force-list always
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:*:kill:*' insert-ids single
 zstyle ':completion:*:*:killall:*' menu yes select
+
+zstyle ':completion:*:*:git:*' tag-order common-commands
 
 # Ignore completion functions for commands you don't have:
 zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec)|TRAP*)'
