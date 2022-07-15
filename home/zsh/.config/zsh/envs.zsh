@@ -74,6 +74,7 @@ export PAGER=less
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/ripgreprc"
 
 # fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh || $HOMEBREW_PREFIX/opt/fzf/install --key-bindings --completion --no-update-rc --no-fish
 FZF_FILE_PREVIEW="([[ -f {} ]] && (bat --style=numbers --color=always --line-range :500 -- {} || cat {}))"
 FZF_DIR_PREVIEW="([[ -d {} ]] && (tree -C {} | less))"
 
