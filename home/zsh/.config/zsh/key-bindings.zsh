@@ -46,8 +46,8 @@ typeset -gA keys=(
     Down                 '^[[B'
     Right                '^[[C'
     Left                 '^[[D'
-    Home                 '^[[H'
-    End                  '^[[F'
+    Home                 '^[[1~' #'^[[H'
+    End                  '^[[4~' #'^[[F'
     Insert               '^[[2~'
     Delete               '^[[3~'
     PageUp               '^[[5~'
@@ -167,6 +167,10 @@ bindkey -- "${keys[Alt+Delete]}"       kill-word
 
 bindkey -- "${keys[Shift+Tab]}"        reverse-menu-complete
 
-##bindkey '^[w' kill-region                             # [C-w] - Kill from the cursor to the mark
+#bindkey '^[w' kill-region                             # [C-w] - Kill from the cursor to the mark
 
 bindkey -M menuselect "${keys[Esc]}"   send-break      # quit completion on escape
+bindkey -M menuselect "${keys[PageUp]}"           backward-word # Scroll page up
+bindkey -M menuselect "${keys[PageDown]}"         forward-word  # Scroll page down
+
+bindkey -- "^X?" _complete_debug
