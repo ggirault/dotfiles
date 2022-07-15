@@ -7,7 +7,16 @@ export LANGUAGE='en_US.UTF-8'
 export DOTFILES="$HOME/.dotfiles"
 
 # homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+OS="$(uname)"
+UNAME_MACHINE="$(/usr/bin/uname -m)"
+if [[ $OS == "Darwin" ]] then
+    if [[ $UNAME_MACHINE == "arm64" ]] then
+        HOMEBREW_PREFIX="/opt/homebrew"
+    else
+        HOMEBREW_PREFIX="/usr/local"
+    fi
+fi
+eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 export HOMEBREW_NO_INSECURE_REDIRECT=1
