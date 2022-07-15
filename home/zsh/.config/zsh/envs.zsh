@@ -109,5 +109,3 @@ export FZF_ALT_C_OPTS="--prompt 'Directories> ' --preview '$FZF_DIR_PREVIEW' --p
 # CTRL-R's options
 export FZF_CTRL_R_OPTS="--layout=default --preview-window=down,3,:nohidden:wrap"
 export FZF_TMUX=1
-
-export STARSHIP_CACHE="$XDG_CACHE_HOME/starship"
