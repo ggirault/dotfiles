@@ -38,10 +38,11 @@ for config_file ("$ZDOTDIR"/lib/*.zsh); do
 done
 unset custom_config_file
 
-fpath=("$ZDOTDIR/lib" $fpath)
-autoload -Uz $ZDOTDIR/lib/*(:t)
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Load all of your custom configurations from custom/
+for config_file ("$ZSHDOTDIR"/custom/*.zsh(N)); do
+  source "$config_file"
+done
+unset config_file
 
 # zsh profiling
 #zprof
