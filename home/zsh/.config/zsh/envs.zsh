@@ -95,7 +95,7 @@ export FZF_DEFAULT_OPTS="
 --bind 'ctrl-s:toggle-sort'
 --bind 'alt-c:deselect-all' 
 --bind 'ctrl-y:execute-silent(echo {+} | pbcopy)' 
---bind 'ctrl-e:execute(echo {+} | xargs -o vim)' 
+--bind 'ctrl-e:execute(echo {+} | xargs -o $EDITOR)' 
 --bind 'ctrl-v:execute(code {+})' 
 --bind 'pgup:half-page-up' 
 --bind 'pgdn:half-page-down' 
