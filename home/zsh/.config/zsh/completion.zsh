@@ -1,5 +1,8 @@
-#fpath=("$ZDOTDIR/plugins/zsh-completions/src" $fpath)
-fpath+="${0:A:h}/plugins/zsh-completions/src"
+#fpath+="${0:A:h}/plugins/zsh-completions/src"
+
+if command -v brew $> /dev/null; then
+    fpath=("$HOMEBREW_PREFIX/share/zsh-completions" $fpath)
+fi
 
 #_comp_options+=(globdots)       # with hidden files
 
