@@ -6,9 +6,10 @@
 --max-columns-preview
 
 # Files/folders to ignore
---glob=!.cache/*
---glob=!.git/*
+--glob=!**/.cache/*
+--glob=!**/.git/*
 --glob=!Library/*
+--glob=!**/node_modules/*
 --glob=!Public/*
 --glob=!tmp/*
 
