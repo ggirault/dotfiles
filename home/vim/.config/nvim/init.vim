@@ -24,7 +24,9 @@ Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'w0rp/ale'
 
 " Languages
-Plug 'hashivim/vim-terraform'
+"Plug 'hashivim/vim-terraform'
+Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown', 'on': 'MarkdownPreview' }
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install() }}
 
 " Powerline alternative
 Plug 'vim-airline/vim-airline'
@@ -44,11 +46,7 @@ if has("termguicolors")
 	set termguicolors
 endif
 
-try
-    colorscheme gruvbox
-catch
-    colorscheme ggirault
-endtry
+colorscheme gruvbox
 
 " ================ General Config ===================
 
@@ -99,11 +97,22 @@ augroup END
 set list
 set listchars=tab:→\ ,trail:·,nbsp:·,precedes:«,extends:»,eol:¶
 
+set formatoptions=crqnj1
+set textwidth=0
 set wrap                        "Wrap lines
 set linebreak                   "Wrap lines at convenient points
+let &showbreak = '↳ '
+set breakindent
+set breakindentopt=sbr
 
+set nostartofline               "Keep the cursor on the same column
+set scrolloff=3                 "Minimal number of screen lines to keep above and below the cursor
 set sidescroll=5
 set sidescrolloff=15
+set foldlevelstart=99           "No folds closed
+
+set wildmenu
+set wildmode=full
 
 " ================ Indentation ======================
 
@@ -128,9 +137,9 @@ set hlsearch                    "Highlight all matches
 
 " ================ Clipboard ======================
 " Get Clipboard copy/paste
-if has('unnamedplus')
-  set clipboard=unnamed,unnamedplus
-endif
+"if has('unnamedplus')
+"  set clipboard=unnamed,unnamedplus
+"endif
 noremap <Leader>y "*y
 "noremap <Leader>p "*p
 noremap <Leader>Y "+y
