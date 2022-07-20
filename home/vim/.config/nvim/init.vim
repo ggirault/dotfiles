@@ -153,14 +153,14 @@ augroup END
 
 " ================ Swapfiles, backups, undos ======================
 
+" Annoying temporary files
 set swapfile
 set directory^=~/.cache/nvim/backup//
-
-set nobackup                    "Don't create annoying backup files
 set backupdir^=~/.cache/nvim/backup//
-
-set undofile
-set undodir^=~/.cache/nvim/undo//
+if has('persistent_undo')
+    set undodir^=~/.cache/nvim/undo//
+    set undofile
+endif
 
 " ================ Encoding ======================
 
