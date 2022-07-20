@@ -63,7 +63,6 @@ syntax on                       "Turn on syntax highlighting
 set ruler
 set number                      "Show line numbers
 "set relativenumber
-set nocursorcolumn
 set visualbell
 set laststatus=2
 set backspace=indent,eol,start  "Allow backspace in insert mode
@@ -73,6 +72,9 @@ set showmode                    "Show current mode down the bottom
 set autoread                    "Reload files changed outside vim
 
 set cursorline
+if exists('&colorcolumn')
+  set colorcolumn=80
+endif
 
 " ================ Mouse ======================
 
