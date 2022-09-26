@@ -77,8 +77,7 @@ export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/ripgreprc"
 FZF_FILE_PREVIEW="([[ -f {} ]] && (bat --style=numbers --color=always --line-range :500 -- {} || cat {}))"
 FZF_DIR_PREVIEW="([[ -d {} ]] && (tree -C {} | less))"
 
-export FZF_DEFAULT_COMMAND="(git ls-tree -r --name-only HEAD || 
-    rg --files --no-ignore --hidden -g '!{.git,node_modules,target}/*') 2> /dev/null"
+export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden"
 # default options
 export FZF_DEFAULT_OPTS="
 --border 
@@ -109,8 +108,8 @@ export FZF_CTRL_T_OPTS="
 --preview-window=60% 
 --prompt 'All> ' 
 --header 'CTRL-D: Directories / CTRL-F: Files' 
---bind 'ctrl-d:change-prompt(Directories> )+reload($FZF_DEFAULT_COMMAND --type d)' 
---bind 'ctrl-f:change-prompt(Files> )+reload($FZF_DEFAULT_COMMAND --type f --type e --type l)' 
+--bind 'ctrl-d:change-prompt(Directories> )+reload($FZF_DEFAULT_COMMAND --sort-files --null | xargs -0 dirname | sort -u)' 
+--bind 'ctrl-f:change-prompt(Files> )+reload($FZF_DEFAULT_COMMAND)' 
 "
 export FZF_ALT_C_COMMAND="fd --no-ignore --hidden --follow --strip-cwd-prefix --exclude '.git' --type d"
 # ALT-C's options
