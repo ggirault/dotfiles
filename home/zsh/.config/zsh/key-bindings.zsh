@@ -46,8 +46,8 @@ typeset -gA keys=(
     Down                 '^[[B'
     Right                '^[[C'
     Left                 '^[[D'
-    Home                 '^[[1~' #'^[[H'
-    End                  '^[[4~' #'^[[F'
+    Home                 '^[[1~'
+    End                  '^[[4~'
     Insert               '^[[2~'
     Delete               '^[[3~'
     PageUp               '^[[5~'
@@ -173,6 +173,7 @@ bindkey -M menuselect "${keys[Esc]}"   send-break      # quit completion on esca
 bindkey -M menuselect "${keys[PageUp]}"           backward-word # Scroll page up
 bindkey -M menuselect "${keys[PageDown]}"         forward-word  # Scroll page down
 
+bindkey -- "^Xa" _expand_alias
 bindkey -- "^X?" _complete_debug
 
 # fzf
