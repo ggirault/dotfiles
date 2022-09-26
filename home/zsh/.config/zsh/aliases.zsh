@@ -62,7 +62,7 @@ alias oldvim="\vi"
 # Airport
 alias airport='sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport'
 # Flush out the DNS Cache
-alias flushDNS='dscacheutil -flushcache'
+alias flushDNS='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
 # Opens current directory in MacOS Finder
 alias finder='open -a Finder ./'
 # Recursively delete .DS_Store files
