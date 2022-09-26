@@ -4,6 +4,9 @@
 alias reload!='source $ZDOTDIR/.zshrc'
 alias less='zless'
 
+# suffixes
+alias -s log='tail -f'
+
 # directory
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -52,7 +55,6 @@ alias glods="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgr
 alias glola="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --all"
 alias glog='git log --oneline --decorate --graph'
 alias gloga='git log --oneline --decorate --graph --all'
-alias gss='git status -s'
 alias gst='git status'
 
 # vim
