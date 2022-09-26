@@ -3,7 +3,7 @@ setopt auto_menu                # show completion menu on successive tab press
 setopt complete_in_word         # allow completion from within a word/phrase
 setopt hash_list_all            # when a completion is attempted, hash it first
 setopt list_ambiguous           # complete as much of a completion until it gets ambiguous.
-setopt menu_complete            # not autoselect the first completion entry
+setopt no_menu_complete         # no autoselect of the first completion entry
 setopt no_flow_control          # disable start (C-s) and stop (C-q) characters
 setopt globdots                 # match hidden files without explicitly specifying the dot
 
