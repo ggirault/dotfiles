@@ -117,4 +117,3 @@ export FZF_ALT_C_COMMAND="fd --no-ignore --hidden --follow --strip-cwd-prefix --
 export FZF_ALT_C_OPTS="--prompt 'Directories> ' --preview '$FZF_DIR_PREVIEW' --preview-window=down,60%"
 # CTRL-R's options
 export FZF_CTRL_R_OPTS="--layout=default --preview-window=down,3,:nohidden:wrap"
-export FZF_TMUX=1
