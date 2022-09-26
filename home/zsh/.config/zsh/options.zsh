@@ -5,6 +5,7 @@ setopt hash_list_all            # when a completion is attempted, hash it first
 setopt list_ambiguous           # complete as much of a completion until it gets ambiguous.
 setopt menu_complete            # not autoselect the first completion entry
 setopt no_flow_control          # disable start (C-s) and stop (C-q) characters
+setopt globdots                 # match hidden files without explicitly specifying the dot
 
 #setopt ignore_eof               # prevent accidental C-d from exiting shell
 setopt interactive_comments     # allow comments even in interactive shells
