@@ -3,6 +3,7 @@
 if command -v brew > /dev/null 2>&1; then
     fpath=("$HOMEBREW_PREFIX/share/zsh-completions" "$HOMEBREW_PREFIX/share/zsh/site-functions/" $fpath)
 fi
+fpath=("$ZDOTDIR/plugins" $fpath)
 
 zmodload -i zsh/complist
 
