@@ -1,7 +1,7 @@
 #fpath+="${0:A:h}/plugins/zsh-completions/src"
 
 if command -v brew > /dev/null 2>&1; then
-    fpath=("$HOMEBREW_PREFIX/share/zsh-completions" $fpath)
+    fpath=("$HOMEBREW_PREFIX/share/zsh-completions" "$HOMEBREW_PREFIX/share/zsh/site-functions/" $fpath)
 fi
 
 zmodload -i zsh/complist
