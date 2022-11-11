@@ -21,7 +21,6 @@ font:
   bold_italic:
     family: InconsolataLGC Nerd Font Mono
     style: BoldItalic
-  use_thin_strokes: true
 
 draw_bold_text_with_bright_colors: true
 
