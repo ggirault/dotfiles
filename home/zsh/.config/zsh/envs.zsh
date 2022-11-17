@@ -75,31 +75,32 @@ export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/ripgreprc"
 
 # fzf
 FZF_FILE_PREVIEW="([[ -f {} ]] && (bat --style=numbers --color=always --line-range :500 -- {} || cat {}))"
-FZF_DIR_PREVIEW="([[ -d {} ]] && (tree -C {} | less))"
+FZF_DIR_PREVIEW="([[ -d  {} ]] && (tree -C {} | less))"
 
 export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden"
 # default options
-export FZF_DEFAULT_OPTS="
---border 
---info=inline 
---multi 
---cycle 
---preview-window=:nohidden:wrap,right:60% 
---preview '($FZF_FILE_PREVIEW || $FZF_DIR_PREVIEW) 2>/dev/null | head -200' 
---prompt='∼ ' --pointer='▶' --marker='✓' 
---color=hl+:#ff00ff,preview-bg:#292924 
---bind '?:toggle-preview,alt-w:toggle-preview-wrap' 
---bind 'ctrl-a:select-all' 
+export FZF_DEFAULT_OPTIONS="
+--height 70%
+--border
+--info=inline
+--multi
+--cycle
+--preview-window=:nohidden:wrap,right:60%
+--preview '($FZF_FILE_PREVIEW || $FZF_DIR_PREVIEW) 2>/dev/null | head -200'
+--prompt='∼ ' --pointer='▶' --marker='✓'
+--color=hl+:#ff00ff,preview-bg:#292924
+--bind '?:toggle-preview,alt-w:toggle-preview-wrap'
+--bind 'ctrl-a:select-all'
 --bind 'ctrl-t:toggle-all'
 --bind 'ctrl-s:toggle-sort'
---bind 'alt-c:deselect-all' 
---bind 'ctrl-y:execute-silent(echo {+} | pbcopy)' 
---bind 'ctrl-e:execute(echo {+} | xargs -o $EDITOR)' 
---bind 'ctrl-v:execute(code {+})' 
---bind 'pgup:half-page-up' 
---bind 'pgdn:half-page-down' 
---bind 'shift-up:preview-page-up' 
---bind 'shift-down:preview-page-down' 
+--bind 'alt-c:deselect-all'
+--bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'
+--bind 'ctrl-e:execute(echo {+} | xargs -o $EDITOR)'
+--bind 'ctrl-v:execute(code {+})'
+--bind 'pgup:half-page-up'
+--bind 'pgdn:half-page-down'
+--bind 'shift-up:preview-page-up'
+--bind 'shift-down:preview-page-down'
 "
 # CTRL-T command
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

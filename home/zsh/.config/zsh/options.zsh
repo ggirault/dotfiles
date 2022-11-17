@@ -17,7 +17,7 @@ setopt pushd_ignore_dups        # no duplicates in dir stack
 setopt pushd_minus              # exchanges the meanings of ‘+’ and ‘-’ when used with a number to specify a directory in the stack
 setopt pushd_silent             # no dir stack after pushd or popd
 
-setopt longlistjobs             # print job notifications in the long format by default
+setopt long_list_jobs           # print job notifications in the long format by default
 #setopt print_exit_value         # print return value if non-zero
 
 ## History command configuration
