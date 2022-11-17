@@ -112,8 +112,8 @@ export FZF_CTRL_T_OPTS="
 --bind 'ctrl-d:change-prompt(Directories> )+reload($FZF_DEFAULT_COMMAND --sort-files --null | xargs -0 dirname | sort -u)' 
 --bind 'ctrl-f:change-prompt(Files> )+reload($FZF_DEFAULT_COMMAND)' 
 "
-export FZF_ALT_C_COMMAND="fd --no-ignore --hidden --follow --strip-cwd-prefix --exclude '.git' --type d"
+export FZF_ALT_C_COMMAND="fd --no-ignore --hidden --follow --strip-cwd-prefix --exclude '.git' --exclude '.venv*/' --type d"
 # ALT-C's options
 export FZF_ALT_C_OPTS="--prompt 'Directories> ' --preview '$FZF_DIR_PREVIEW' --preview-window=down,60%"
 # CTRL-R's options
-export FZF_CTRL_R_OPTS="--layout=default --preview-window=down,3,:nohidden:wrap"
+export FZF_CTRL_R_OPTS="--layout=default --preview-window=down,3,:hidden:wrap"
