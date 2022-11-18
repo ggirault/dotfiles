@@ -15,6 +15,9 @@ map('n', '<leader><tab>', '<plug>(fzf-maps-n)', { silent = true, desc = 'Show ke
 map('i', '<leader><tab>', '<plug>(fzf-maps-i)', { silent = true, desc = 'Show keymaps in insert mode' }) -- show keymaps in insert mode
 map('x', '<leader><tab>', '<plug>(fzf-maps-x)', { silent = true, desc = 'Show keymaps in visual mode' }) -- show keymaps in visual mode
 
+map({'n', 'v'}, '<leader>s', ':call fzf#run({"down": "50%","sink": "botright split"})<CR>', { silent = true, desc = 'Open files in vertical split' })
+map({'n', 'v'}, '<leader>v', ':call fzf#run({"right": winwidth(".") / 2,"sink": "vertical botright split"})<CR>', { silent = true, desc = 'Open files in vertical split' })
+
 map('n', '<leader>y', '"*y', { silent = true})
 map('n', '<leader>Y', '"+y', { silent = true})
 
