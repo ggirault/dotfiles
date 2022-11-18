@@ -79,18 +79,18 @@ FZF_DIR_PREVIEW="([[ -d  {} ]] && (tree -C {} | less))"
 
 export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden"
 # default options
-export FZF_DEFAULT_OPTIONS="
+export FZF_DEFAULT_OPTS="
 --height 70%
---border
+--border=rounded
 --info=inline
 --multi
 --cycle
---preview-window=:nohidden:wrap,right:60%
+--preview-window=:nohidden:wrap,right:60%,border-bold
 --preview '($FZF_FILE_PREVIEW || $FZF_DIR_PREVIEW) 2>/dev/null | head -200'
---prompt='∼ ' --pointer='▶' --marker='✓'
---color=hl+:#ff00ff,preview-bg:#292924
---bind '?:toggle-preview,alt-w:toggle-preview-wrap'
---bind 'ctrl-a:select-all'
+--prompt='∼ ' --pointer='▶' --marker='✓' 
+--color=hl+:#ff00ff,bg:#292924,preview-bg:#34342f
+--bind '?:toggle-preview,alt-w:toggle-preview-wrap' 
+--bind 'ctrl-a:select-all' 
 --bind 'ctrl-t:toggle-all'
 --bind 'ctrl-s:toggle-sort'
 --bind 'alt-c:deselect-all'
