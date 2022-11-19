@@ -46,7 +46,8 @@ set.breakindent = true -- preserve the indentation of a virtual line
 set.breakindentopt = 'sbr' -- display the 'showbreak' value before applying the additional indent
 
 -- Sidebar
-set.number = true -- line number on the left
+set.number = true -- line number on the left combined with ...
+set.relativenumber = true -- to show line number + relative number
 set.numberwidth = 3 -- always reserve 3 spaces for line number
 set.modelines = 0
 set.showcmd = true -- display command in bottom bar
