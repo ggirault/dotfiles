@@ -20,20 +20,3 @@ require("gruvbox").setup({
 })
 
 vim.cmd([[colorscheme gruvbox]])
-
-vim.cmd([[
-  augroup highlight_yank
-    autocmd!
-    au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=300 }
-  augroup END
-]])
-
-vim.cmd([[
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
-  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
-  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * set cursorline
-  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * set nocursorline
-augroup END
-]])
