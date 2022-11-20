@@ -77,8 +77,11 @@ zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' cache-path "$ZSH_CACHE_DIR"
 
+# Autocomplete options
+zstyle ':completion:*' complete-options true
+
 # Display order of commands
-zstyle ':completion:*:*:-command-:*:*' group-order aliases functions commands builtins
+zstyle ':completion:*:*:-command-:*:*' group-order aliases builtins functions commands
 
 # Group manpages manual.X
 zstyle ':completion:*:manuals' separate-sections true
