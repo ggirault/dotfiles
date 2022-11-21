@@ -17,7 +17,7 @@ set.history = 1000
 set.completeopt = 'menu,menuone,preview' -- show possible completions
 set.dictionary = '/usr/share/dict/words' -- word completion with i_CTRL-X_CTRL-K
 
-clipboard = 'unnamedplus'
+set.clipboard = {'unnamed','unnamedplus'}
 
 -- Mapping waiting time
 set.timeout = false

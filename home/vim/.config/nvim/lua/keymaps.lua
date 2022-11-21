@@ -19,8 +19,8 @@ map('x', '<leader><tab>', '<plug>(fzf-maps-x)', { silent = true, desc = 'Show ke
 map({'n', 'v'}, '<leader>s', ':call fzf#run({"down": "50%","sink": "botright split"})<CR>', { silent = true, desc = 'Open files in vertical split' })
 map({'n', 'v'}, '<leader>v', ':call fzf#run({"right": winwidth(".") / 2,"sink": "vertical botright split"})<CR>', { silent = true, desc = 'Open files in vertical split' })
 
-map('n', '<leader>y', '"*y', { silent = true})
-map('n', '<leader>Y', '"+y', { silent = true})
+--map('n', '<leader>y', '"*y', { silent = true})
+--map('n', '<leader>Y', '"+y', { silent = true})
 
 map({'n', 'x'}, 'x', '"_x') -- delete text without changing the registers ("_ black hole register)
 
