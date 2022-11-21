@@ -17,10 +17,13 @@ if [[ $OS == "Darwin" ]] then
     fi
 fi
 eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_INSECURE_REDIRECT=1
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 export HOMEBREW_NO_INSECURE_REDIRECT=1
-export HOMEBREW_CASK_OPTS="--appdir='$HOME/Applications' --require-sha"
+export HOMEBREW_CASK_OPTS="--appdir='$HOME/Applications' --fontdir='~/Library/Fonts' --require-sha --no-quarantine"
+export HOMEBREW_BAT=1
 
 # zsh
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
