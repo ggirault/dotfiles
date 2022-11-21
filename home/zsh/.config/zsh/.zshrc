@@ -15,12 +15,6 @@ source "$ZDOTDIR/functions.zsh"
 
 source "$ZDOTDIR/key-bindings.zsh"
 
-if [[ "$(uname -s)" == 'Linux' ]]; then
-      source "$ZDOTDIR/linux.zsh"
-  elif [[ "$(uname -s)" == 'Darwin' ]]; then
-        source "$ZDOTDIR/mac.zsh"
-fi
-
 if [[ -e "$HOME/.zshrc_local" ]]; then
   source "$HOME/.zshrc_local"
 fi

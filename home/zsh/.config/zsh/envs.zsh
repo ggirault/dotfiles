@@ -24,6 +24,7 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 export HOMEBREW_NO_INSECURE_REDIRECT=1
 export HOMEBREW_CASK_OPTS="--appdir='$HOME/Applications' --fontdir='~/Library/Fonts' --require-sha --no-quarantine"
 export HOMEBREW_BAT=1
+#export HOMEBREW_BAT_THEME=
 
 # zsh
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
@@ -120,3 +121,15 @@ export FZF_ALT_C_COMMAND="fd --no-ignore --hidden --follow --strip-cwd-prefix --
 export FZF_ALT_C_OPTS="--prompt 'Directories> ' --preview '$FZF_DIR_PREVIEW' --preview-window=down,60%"
 # CTRL-R's options
 export FZF_CTRL_R_OPTS="--layout=default --preview-window=down,3,:hidden:wrap"
+
+# ZSH Autosugggestion
+source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=063,underline'
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=40
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+# Fast-syntax-hightlighting
+source $HOMEBREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+
+#export SHELL_SESSIONS_DISABLE=1
