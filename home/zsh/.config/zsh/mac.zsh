@@ -13,5 +13,6 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 source $HOMEBREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 if ! infocmp tmux > /dev/null 2>&1; then
-  tic -ax "$ZDOTDIR"/tmux.terminfo
+  tic -ax "$ZDOTDIR"/alacritty.info
+  tic -ax "$ZDOTDIR"/tmux.info
 fi
