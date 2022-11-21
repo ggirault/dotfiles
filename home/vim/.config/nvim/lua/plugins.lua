@@ -46,10 +46,10 @@ return require('packer').startup({function(use)
   -- nvim-cmp completion sources
   use { 'hrsh7th/cmp-path', after = 'nvim-cmp' } -- path completions
   use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' } -- buffer completions
-  use { 'hrsh7th/cmp-omni', after = 'nvim-cmp' } -- omni function completions
   use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' } -- cmdline completions
   use 'hrsh7th/cmp-nvim-lsp' -- lsp completions
   use 'hrsh7th/cmp-nvim-lua' -- lua api completions
+  use 'L3MON4D3/LuaSnip' -- Snippets plugin
 
   -- LSP support
   use 'neovim/nvim-lspconfig'
@@ -61,9 +61,6 @@ return require('packer').startup({function(use)
   use 'ellisonleao/gruvbox.nvim'
   --use 'folke/tokyonight.nvim'
   use { 'nvim-lualine/lualine.nvim', config = [[require('config.lualine')]] }
-
-  -- tab pages
-  use { 'akinsho/bufferline.nvim', config = [[require('config.bufferline')]] }
 
   -- indent blank lines
   use { 'lukas-reineke/indent-blankline.nvim', config = [[require('config.indent-blankline')]] }

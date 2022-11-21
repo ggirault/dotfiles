@@ -49,11 +49,11 @@ lsp_defaults.capabilities = vim.tbl_deep_extend(
 local cmp = require("cmp")
 local select_opts = {behavior = cmp.SelectBehavior.Select}
 cmp.setup({
-  --snippet = {
-  --  expand = function(args)
-  --    require("luasnip").lsp_expand(args.body)
-  --  end,
-  --},
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
+  },
   mapping = {
     ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
     ['<Down>'] = cmp.mapping.select_next_item(select_opts),
@@ -70,8 +70,8 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item(select_opts)
-      --elseif luasnip.expand_or_jumpable() then
-      --  luasnip.expand_or_jump()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -79,8 +79,8 @@ cmp.setup({
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item(select_opts)
-      --elseif luasnip.jumpable(-1) then
-      --  luasnip.jump(-1)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -91,7 +91,7 @@ cmp.setup({
     { name = 'rg' },
     { name = "nvim_lsp", keyword_length = 3 },
     { name = "buffer", keyword_length = 3 },
-    --{ name = "luasnip" },
+    { name = "luasnip" },
     { name = "nvim_lua" },
   },
   window = {
@@ -112,7 +112,6 @@ cmp.setup({
     end,
   },
 })
- 
  
 -- customize diagnostic
 vim.diagnostic.config({
