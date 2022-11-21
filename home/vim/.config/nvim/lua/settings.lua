@@ -34,14 +34,14 @@ set.laststatus = 2 -- always show status line
 set.visualbell = true
 
 set.list = true -- display white characters
-set.listchars = {tab='→ ',trail='·',nbsp='·',precedes='«',extends='»',eol='¶'}
+set.listchars = {tab='→ ',trail='·',nbsp='·',precedes='«',extends='»',eol='↲'}
 set.foldenable = false
 set.foldlevel = 4 -- limit folding to 4 levels
 set.foldmethod = 'syntax' -- use language syntax to generate folds
 set.wrap = true -- wrap lines even if very long
 set.eol = true -- show if there's no eol char
 set.startofline = false -- do not move the cursor to the first non-blank of the line
-set.showbreak = '↳ ' -- character to show when line id broken
+set.showbreak = '↪︎ ' -- character to show when line id broken
 set.breakindent = true -- preserve the indentation of a virtual line
 set.breakindentopt = 'sbr' -- display the 'showbreak' value before applying the additional indent
 
