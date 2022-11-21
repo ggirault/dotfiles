@@ -2,6 +2,7 @@ vim.g.mapleader = ','
 vim.g.malocalpleader = '\\'
 
 local map = vim.keymap.set
+
 -- FZF
 map('n', '<leader>f', ':GFiles<CR>', { silent = true, desc = 'Show all git files' }) -- git files
 map('n', '<leader>F', ':Files<CR>', { silent = true, desc = 'Show files in current path' }) -- files
@@ -27,7 +28,6 @@ vim.cmd([[
   command! -bang HomeFiles call fzf#vim#files('~/', <bang>0)
 ]])
 
-
 -- ==== CONF TO REFACTOR ====
 
 local opts = { noremap = true, silent = true }
@@ -36,10 +36,7 @@ local term_opts = { silent = true }
  
 -- Shorten function name
 local keymap = vim.api.nvim_set_keymap
- 
-vim.g.mapleader = ','
-vim.g.maplocalleader = '\\'
- 
+
 -- Modes
 --   normal_mode = "n",
 --   insert_mode = "i",
