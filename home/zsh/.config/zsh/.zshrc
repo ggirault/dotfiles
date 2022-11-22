@@ -11,8 +11,6 @@ source "$ZDOTDIR/completion.zsh"
 
 source "$ZDOTDIR/prompt.zsh"
 
-source "$ZDOTDIR/functions.zsh"
-
 source "$ZDOTDIR/key-bindings.zsh"
 
 if [[ -e "$HOME/.zshrc_local" ]]; then
