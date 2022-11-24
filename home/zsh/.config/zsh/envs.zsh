@@ -133,3 +133,4 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 source $HOMEBREW_PREFIX/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 #export SHELL_SESSIONS_DISABLE=1
+export FORGIT_DIFF_PAGER="delta --width \$FZF_PREVIEW_COLUMNS"
