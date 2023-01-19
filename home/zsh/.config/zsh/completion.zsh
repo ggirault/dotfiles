@@ -18,7 +18,7 @@ autoload -U zmv
 zstyle ':completion:*' rehash true
 
 # Define completers
-zstyle ':completion:*' completer _complete _prefix _ignored
+zstyle ':completion:*' completer _complete _ignored
 #zstyle ':completion:*' completer _complete _match _prefix _correct
 
 zstyle ':completion:*:prefix-complete:*' completer _complete
@@ -40,7 +40,7 @@ zstyle '*' single-ignored show
 # First case insensitive completion (when in lowercase but not the opposite)
 # then case-sensitive partial-word completion (word*)
 # then case sensitive partial-word completion (*word)
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|=*' 'l:|=*'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|=*' 'l:|=* r:|=*'
 
 # Allow 2 errors in correct completer
 zstyle ':completion:*:correct:*' max-errors 2 not-numeric
@@ -126,10 +126,8 @@ zstyle ':completion:alias-expension:*' completer _expand_alias
 #zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
 # Move over and edit words in the manner of bash
-autoload -U select-word-style
-select-word-style bash
-# ... but don't stop on these characeters
-zstyle ':zle:*' word-chars '.-'
+zstyle ':zle:*' word-style standard
+WORDCHARS="[[:alpha:]0-9]"
 
 # A newly added command will may not be found or will cause false
 # correction attempts, if you got auto-correction set. By setting the
