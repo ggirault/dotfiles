@@ -33,13 +33,15 @@
   colorMoved    = dimmed-zebra
 
 [interactive]
-  diffFilter    = delta --color-only
+  #diffFilter    = delta --color-only
+  diffFilter    = diff-so-fancy
 
 [delta]
   navigate      = true
   line-numbers  = true
   side-by-side  = true
   diff-so-fancy = true
+  width = 190
 
 # Include local config if relevant
 
