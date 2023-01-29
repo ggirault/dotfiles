@@ -14,20 +14,7 @@ end
 
 local packer_bootstrap = ensure_packer()
 
---local status_ok, packer = pcall(require, 'packer')
---if not status_ok then
---  return
---end
 
---packer.init({
---  display = {
---    open_fn = function()
---      return require('packer.util').float({ border = 'rounded' })
---    end,
---  },
---})
-
--- Automatically run PackerSync whenever file is updated
 vim.cmd([[
   augroup packer_user_config
     autocmd!
@@ -37,67 +24,87 @@ vim.cmd([[
 
 -- Setup plugins
 require('packer').startup({function(use)
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
+  use 'wbthomason/packer.nvim' -- Packer can manage itself
 
-  -- auto-completion engine
-  use { 'hrsh7th/nvim-cmp', config = [[require('config.nvim-cmp')]] } -- the completion plugin
+  use 'neovim/nvim-lspconfig' -- LSP support
+
+  use { -- the completion plugin
+    'hrsh7th/nvim-cmp',
+    requires = { 'hrsh7th/cmp-nvim-lsp' ,'L3MON4D3/LuaSnip' },
+    config = function() require('config.nvim-cmp') end
+  }
 
   -- nvim-cmp completion sources
-  use { 'hrsh7th/cmp-path', after = 'nvim-cmp' } -- path completions
-  use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' } -- buffer completions
-  use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' } -- cmdline completions
-  use 'hrsh7th/cmp-nvim-lsp' -- lsp completions
+  use { -- path completions
+    'hrsh7th/cmp-path',
+    after = 'nvim-cmp' 
+  }
+  use { -- buffer completions
+    'hrsh7th/cmp-buffer',
+    after = 'nvim-cmp' 
+  }
+  use { -- cmdline completions
+    'hrsh7th/cmp-cmdline',
+    after = 'nvim-cmp' 
+  }
   use 'hrsh7th/cmp-nvim-lua' -- lua api completions
-  use 'L3MON4D3/LuaSnip' -- Snippets plugin
 
-  -- LSP support
-  use 'neovim/nvim-lspconfig'
+  use { -- Treesitter
+    'nvim-treesitter/nvim-treesitter',
+    run = function() pcall(require('nvim-treesitter.install').update { with_sync = true }) end
+  }
 
-  -- Treesitter
-  use 'nvim-treesitter/nvim-treesitter'
+  use { -- Additional text objects via treesitter
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    after = 'nvim-treesitter',
+  }
+  
+  use 'ellisonleao/gruvbox.nvim' -- colorscheme
+  use { -- better status line
+    'nvim-lualine/lualine.nvim',
+    config = function() require('config.lualine') end
+  }
+  use { -- show tabs
+    'akinsho/bufferline.nvim',
+    config = function() require('config.bufferline') end 
+  }
 
-  -- colorscheme
-  use 'ellisonleao/gruvbox.nvim'
-  --use 'folke/tokyonight.nvim'
-  use { 'nvim-lualine/lualine.nvim', config = [[require('config.lualine')]] }
+  use { -- indent blank lines
+    'lukas-reineke/indent-blankline.nvim',
+    config = function() require('config.indent-blankline') end 
+  }
 
-  -- indent blank lines
-  use { 'lukas-reineke/indent-blankline.nvim', config = [[require('config.indent-blankline')]] }
+  use { -- Highlight URLs inside vim
+    'itchyny/vim-highlighturl',
+    event = 'VimEnter' 
+  }
 
-  -- Highlight URLs inside vim
-  use { 'itchyny/vim-highlighturl', event = 'VimEnter' }
-
-  -- FZF
-  use { 'junegunn/fzf', run = ':call fzf#install()' }
+  use { -- FZF
+    'junegunn/fzf',
+    run = ':call fzf#install()' 
+  }
   use 'junegunn/fzf.vim'
-  --use {'junegunn/goyo.vim', config = [[require('config.goyo')]] }
+  
+  use { -- Comment plugin
+    'tpope/vim-commentary',
+    event = "VimEnter"
+  }
 
-  -- Rainbow Parenthesis
-  --use 'junegunn/rainbow_parentheses.vim'
+  --use 'mg979/vim-visual-multi' -- Multiple cursor plugin like VSCode
 
-  -- Comment plugin
-  use { 'tpope/vim-commentary', event = "VimEnter" }
+  use 'lewis6991/gitsigns.nvim' -- Show git change (change, delete, add) signs in vim sign column
 
-  -- Multiple cursor plugin like VSCode
-  use 'mg979/vim-visual-multi'
-
-  -- Git command inside vim
-  use { 'tpope/vim-fugitive', event = 'User InGitRepo', config = [[require('config.fugitive')]] }
-  use 'christoomey/vim-conflicted'
-
-  -- Show git change (change, delete, add) signs in vim sign column
-  use 'lewis6991/gitsigns.nvim'
-
-  -- EditorConfig
-  use { 'editorconfig/editorconfig-vim', config = [[require('config.editorconfig')]] }
-
-  -- IaaC
-  use { 'hashivim/vim-terraform', config = [[require('config.terraform')]] }
-
-  use { 'bash-lsp/bash-language-server', config = [[require'lspconfig'.bashls.setup{}]] }
-
+  -- Languages
+  --use {
+  --  'hashivim/vim-terraform',
+  --  config = [[require('config.terraform')]]
+  --}
+  use {
+    'bash-lsp/bash-language-server',
+    config = function() require('lspconfig').bashls.setup{} end
+  }
   use 'simrat39/rust-tools.nvim'
+
 end,
 config = {
   display = {
@@ -105,16 +112,3 @@ config = {
   }
 }})
 
-
-local rt = require("rust-tools")
-
-rt.setup({
-  server = {
-    on_attach = function(_, bufnr)
-      -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    end,
-  },
-})

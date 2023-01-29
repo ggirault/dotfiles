@@ -5,13 +5,16 @@ vim.g.loaded_perl_provider = 0  -- Disable perl provider
 vim.g.loaded_ruby_provider = 0  -- Disable ruby provider
 vim.g.loaded_node_provider = 0  -- Disable node provider
 
+vim.g.vimsyn_embed = 'l' -- enable highlighting for lua HERE doc inside vim script
+
 -- Mapping
 local set = vim.opt
 
 -- basic settings
 set.encoding = 'utf-8'
 set.backspace = {'indent','eol','start'} -- backspace work on every char in insert mode
-set.completeopt = {'menu', 'menuone', 'noselect'}
+--set.completeopt = {'menu', 'menuone', 'noselect'}
+set.completeopt = {'menu', 'menuone'}
 set.wildmenu = true -- on TAB, complete options for system command
 set.history = 1000
 set.completeopt = 'menu,menuone,preview' -- show possible completions
@@ -88,3 +91,14 @@ set.undodir = CACHE .. '/nvim/undo//'     -- undo files
 set.backupdir = CACHE .. '/nvim/backup//' -- backups
 set.directory = CACHE .. '/nvim/swap//'   -- swap files
 
+-- When opening a window put it right or below the current one
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+-- Look for a tag file in the git folder
+-- I shouldn't have to use `cwd` but here we are
+vim.opt.tags:prepend(string.format('%s/.git/tags', vim.fn.getcwd()))
+
+-- Set grep default grep command with ripgrep
+vim.opt.grepprg = 'rg --vimgrep --follow'
+vim.opt.errorformat:append('%f:%l:%c%p%m')

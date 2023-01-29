@@ -1,42 +1,92 @@
-local cmp = require("cmp")
+-- Add additional capabilities supported by nvim-cmp
+local lspconfig = require('lspconfig')
+local lsp_defaults = lspconfig.util.default_config
+ 
+lsp_defaults.capabilities = vim.tbl_deep_extend(
+  'force',
+  lsp_defaults.capabilities,
+  require('cmp_nvim_lsp').default_capabilities()
+)
 
-cmp.setup {
+-- nvim-cmp setup
+local cmp = require("cmp")
+local luasnip = require 'luasnip'
+local select_opts = {behavior = cmp.SelectBehavior.Select}
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
+  },
   mapping = cmp.mapping.preset.insert {
-    ["<Tab>"] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end,
-    ["<S-Tab>"] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end,
-    ["<CR>"] = cmp.mapping.confirm { select = true },
-    ["<C-e>"] = cmp.mapping.abort(),
-    ["<Esc>"] = cmp.mapping.close(),
+    ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
+    ['<Down>'] = cmp.mapping.select_next_item(select_opts),
+    ["<C-p>"] = cmp.mapping.select_prev_item(select_opts),
+    ["<C-n>"] = cmp.mapping.select_next_item(select_opts),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.close(),
+    ["<CR>"] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item(select_opts)
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, {'i', 's'}),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item(select_opts)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {'i', 's'}),
   },
   sources = {
-    { name = "nvim_lsp" }, -- For nvim-lsp
+    { name = "nvim_lsp", keyword_length = 2 }, -- for nvim-lsp completion
     { name = "path" }, -- for path completion
-    { name = "buffer", keyword_length = 2 }, -- for buffer word completion
-    { name = "omni" },
+    { name = 'rg' },
+    { name = "luasnip" },
+    { name = "nvim_lua" },
   },
-    completion = {
-    keyword_length = 1,
-    completeopt = "menu,noselect",
+  --view = {                                                        
+  --  entries = {name = 'custom', selection_order = 'near_cursor' } 
+  --}, 
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
-    view = {
-    entries = "custom",
+  formatting = {
+    fields = {'abbr', 'kind', 'menu'},
+    format = function(entry, item)
+      local menu_icon = {
+        buffer = '[Buffer]',
+        nvim_lsp = '[LSP]',
+        luasnip = '[LuaSnip]',
+        nvim_lua = "[Lua]",
+        path = '[Path]',
+        rg = '[RG]',
+      }
+      item.menu = menu_icon[entry.source.name]
+      return item
+    end,
   },
+  completion = {
+    keyword_length = 3,
+    completeopt = "menu,menuone,select",
   }
+})
 
+
+-- VSCode Dark Theme
 --  see https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-dark-theme-colors-to-the-menu
 vim.cmd([[
   highlight! link CmpItemMenu Comment
@@ -57,3 +107,23 @@ vim.cmd([[
   highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
   highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
 ]])
+
+--
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer', keyword_length = 2 }
+  }
+})
+--
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+

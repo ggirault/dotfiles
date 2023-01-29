@@ -1,117 +1,39 @@
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-vim.api.nvim_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-vim.api.nvim_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-vim.api.nvim_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts) -- Show diagnostics in a floating window
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts) -- Move to the previous diagnostic
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts) -- Move to the next diagnostic
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+ 
  
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-	-- Enable completion triggered by <c-x><c-o>
-	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
- 
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-S>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(
-		bufnr,
-		"n",
-		"<space>wl",
-		"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-		opts
-	)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  -- Mappings.
+  local nmap = function(keys, func, desc)
+    if desc then
+      desc = 'LSP: ' .. desc
+    end
+
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  end
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  nmap('n', 'gD', vim.lsp.buf.declaration, '[g]oto [D]eclaration') -- Jump to declaration
+  nmap('n', 'gd', vim.lsp.buf.definition, '[g]oto [d]efinition') -- Jump to the definition
+  nmap('n', 'K', vim.lsp.buf.hover, 'Hover Documentatio') -- Displays hover information about the symbol under the cursor
+  nmap('n', 'gi', vim.lsp.buf.implementation, '[g]oto [i]mplementation') -- Lists all the implementations for the symbol under the cursor
+  nmap('n', '<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation') -- Displays a function's signature information
+  nmap('n', '<space>wa', vim.lsp.buf.add_workspace_folder, '[w]orkspace [a]dd Folder')
+  nmap('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, '[w]orkspace [r]emove Folder')
+  nmap('n', '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, '[w]orkspace [l]ist Folders')
+  nmap('n', '<space>D', vim.lsp.buf.type_definition, 'Type [d]efinition') -- Jumps to the definition of the type symbol
+  nmap('n', '<space>rn', vim.lsp.buf.rename, '[r]e[n]ame') -- Renames all references to the symbol under the cursor
+  nmap('n', '<space>ca', vim.lsp.buf.code_action, '[c]ode [a]ction') -- Selects a code action available at the current cursor position
+  nmap('n', 'gr', vim.lsp.buf.references, '[g]oto [r]eferences')
+  nmap('n', '<space>f', function() vim.lsp.buf.format { async = true } end, 'Format current buffer with LSP')
 end
  
--- Add additional capabilities supported by nvim-cmp
-local lspconfig = require('lspconfig')
-local lsp_defaults = lspconfig.util.default_config
- 
-lsp_defaults.capabilities = vim.tbl_deep_extend(
-  'force',
-  lsp_defaults.capabilities,
-  require('cmp_nvim_lsp').default_capabilities()
-)
- 
--- nvim-cmp setup
-local cmp = require("cmp")
-local select_opts = {behavior = cmp.SelectBehavior.Select}
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      require("luasnip").lsp_expand(args.body)
-    end,
-  },
-  mapping = {
-    ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
-    ['<Down>'] = cmp.mapping.select_next_item(select_opts),
-    ["<C-p>"] = cmp.mapping.select_prev_item(select_opts),
-    ["<C-n>"] = cmp.mapping.select_next_item(select_opts),
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.close(),
-    ["<CR>"] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    }),
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item(select_opts)
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, {'i', 's'}),
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item(select_opts)
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, {'i', 's'}),
-  },
-  sources = {
-    { name = "path" },
-    { name = 'rg' },
-    { name = "nvim_lsp", keyword_length = 3 },
-    { name = "buffer", keyword_length = 3 },
-    { name = "luasnip" },
-    { name = "nvim_lua" },
-  },
-  window = {
-    documentation = cmp.config.window.bordered()
-  },
-  formatting = {
-    fields = {'menu', 'abbr', 'kind'},
-    format = function(entry, item)
-      local menu_icon = {
-        nvim_lsp = 'λ',
-        luasnip = '⋗',
-        buffer = 'Ω',
-        path = '🖫',
-      }
- 
-      item.menu = menu_icon[entry.source.name]
-      return item
-    end,
-  },
-})
  
 -- customize diagnostic
 vim.diagnostic.config({
@@ -135,3 +57,42 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
   vim.lsp.handlers.signature_help,
   {border = 'rounded'}
 )
+
+-- nvim-treesitter/nvim-treesitter
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the four listed parsers should always be installed)
+  ensure_installed = { "c", "go", "lua", "python", "rust", "vim", "help" },
+  highlight = {
+    enable = true,
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+
+-- simrat39/rust-tools.nvim
+local rt = require("rust-tools")
+rt.setup({
+  server = {
+    on_attach = function(_, bufnr)
+      -- Hover actions
+      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+      -- Code action groups
+      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+    end,
+  },
+})
+
+
+-- bash-language-server
+--vim.api.nvim_create_autocmd('FileType', {
+--  pattern = 'sh',
+--  callback = function()
+--    vim.lsp.start({
+--      name = 'bash-language-server',
+--      cmd = { 'bash-language-server', 'start' },
+--    })
+--  end,
+--})
