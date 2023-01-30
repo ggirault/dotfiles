@@ -31,7 +31,6 @@ require('packer').startup({function(use)
   use { -- the completion plugin
     'hrsh7th/nvim-cmp',
     requires = { 'hrsh7th/cmp-nvim-lsp' ,'L3MON4D3/LuaSnip' },
-    config = function() require('config.nvim-cmp') end
   }
 
   -- nvim-cmp completion sources
@@ -60,19 +59,9 @@ require('packer').startup({function(use)
   }
   
   use 'ellisonleao/gruvbox.nvim' -- colorscheme
-  use { -- better status line
-    'nvim-lualine/lualine.nvim',
-    config = function() require('config.lualine') end
-  }
-  use { -- show tabs
-    'akinsho/bufferline.nvim',
-    config = function() require('config.bufferline') end 
-  }
-
-  use { -- indent blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    config = function() require('config.indent-blankline') end 
-  }
+  use { 'nvim-lualine/lualine.nvim' } -- better status line
+  use { 'akinsho/bufferline.nvim' } -- show tabs
+  use { 'lukas-reineke/indent-blankline.nvim' } -- indent blank lines
 
   use { -- Highlight URLs inside vim
     'itchyny/vim-highlighturl',
@@ -95,15 +84,18 @@ require('packer').startup({function(use)
   use 'lewis6991/gitsigns.nvim' -- Show git change (change, delete, add) signs in vim sign column
 
   -- Languages
-  --use {
-  --  'hashivim/vim-terraform',
-  --  config = [[require('config.terraform')]]
-  --}
-  use {
+  --use { 'hashivim/vim-terraform' } -- terraform
+  use { -- bash
     'bash-lsp/bash-language-server',
     config = function() require('lspconfig').bashls.setup{} end
   }
-  use 'simrat39/rust-tools.nvim'
+
+  -- Rust
+  use 'simrat39/rust-tools.nvim' -- rust
+  -- Debugging
+  use 'nvim-lua/plenary.nvim'
+  use 'mfussenegger/nvim-dap'
+  use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 
 end,
 config = {

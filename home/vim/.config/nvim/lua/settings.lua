@@ -55,6 +55,7 @@ set.numberwidth = 3 -- always reserve 3 spaces for line number
 set.modelines = 0
 set.showcmd = true -- display command in bottom bar
 set.showmode = true -- display current mode down the bottom
+set.signcolumn = 'auto'
 
 -- Search
 set.incsearch = true -- starts searching as soon as typing, without enter needed

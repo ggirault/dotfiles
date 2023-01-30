@@ -2,7 +2,6 @@ require('settings')
 require('colorscheme')
 require('keymaps')
 require('plugins')
-require('lsp')
 
 local vim_files = {
   'autocommands.vim'
