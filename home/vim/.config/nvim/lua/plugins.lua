@@ -14,7 +14,6 @@ end
 
 local packer_bootstrap = ensure_packer()
 
-
 vim.cmd([[
   augroup packer_user_config
     autocmd!
@@ -97,6 +96,10 @@ require('packer').startup({function(use)
   use 'mfussenegger/nvim-dap'
   use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 
+  -- Automatically set up configuration after cloning packer.nvim
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end,
 config = {
   display = {
