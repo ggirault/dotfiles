@@ -55,9 +55,6 @@ shell:
     - -c
     - "tmux new-session -A -D -s main"
 
-# Send ESC (\x1b) before characters when alt is pressed.
-alt_send_esc: true
-
 key_bindings:
   # Vi Mode
   #- { key: V,                           mode: Vi|~Search, action: ToggleNormalSelection   }
