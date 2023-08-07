@@ -13,13 +13,12 @@ window:
 
 font:
   normal:
-    family: InconsolataLGC Nerd Font Mono
-    style: Medium
+    family: Inconsolata LGC Nerd Font Mono
   italic:
-    family: InconsolataLGC Nerd Font Mono
+    family: Inconsolata LGC Nerd Font Mono
     style: Italic
   bold_italic:
-    family: InconsolataLGC Nerd Font Mono
+    family: Inconsolata LGC Nerd Font Mono
     style: BoldItalic
 
 draw_bold_text_with_bright_colors: true
