@@ -222,46 +222,7 @@ require("lazy").setup({
       local capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
       capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-      require("lspconfig").gopls.setup({
-        capabilities = capabilities,
-        flags = { debounce_text_changes = 200 },
-        settings = {
-          gopls = {
-            usePlaceholders = true,
-            gofumpt = true,
-            analyses = {
-              nilness = true,
-              unusedparams = true,
-              unusedwrite = true,
-              useany = true,
-            },
-            codelenses = {
-              gc_details = false,
-              generate = true,
-              regenerate_cgo = true,
-              run_govulncheck = true,
-              test = true,
-              tidy = true,
-              upgrade_dependency = true,
-              vendor = true,
-            },
-            experimentalPostfixCompletions = true,
-            completeUnimported = true,
-            staticcheck = true,
-            directoryFilters = { "-.git", "-node_modules" },
-            semanticTokens = true,
-            hints = {
-              assignVariableTypes = true,
-              compositeLiteralFields = true,
-              compositeLiteralTypes = true,
-              constantValues = true,
-              functionTypeParameters = true,
-              parameterNames = true,
-              rangeVariableTypes = true,
-            },
-          },
-        },
-      })
+      require('lspconfig').tsserver.setup({})
     end,
   },
 
@@ -270,6 +231,9 @@ require("lazy").setup({
     "hrsh7th/nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lua",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
@@ -302,11 +266,11 @@ require("lazy").setup({
           format = lspkind.cmp_format {
             with_text = true,
             menu = {
-              buffer = "[Buffer]",
+              buffer = "[Buf]",
               nvim_lsp = "[LSP]",
+              nvim_lsp_signature_help = "[Sig]",
               nvim_lua = "[Lua]",
               path = '[Path]',
-              rg = '[RG]',
             },
           },
         },
@@ -320,26 +284,27 @@ require("lazy").setup({
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.close(),
           ['<CR>'] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true },
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_locally_jumpable() then 
-              luasnip.expand_or_jump()
-            elseif has_words_before() then
-              cmp.complete()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
+          ['<Tab>'] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true },
+          --['<Tab>'] = cmp.mapping(function(fallback)
+          --  if cmp.visible() then
+          --    cmp.select_next_item()
+          --  elseif luasnip.expand_or_locally_jumpable() then 
+          --    luasnip.expand_or_jump()
+          --  elseif has_words_before() then
+          --    cmp.complete()
+          --  else
+          --    fallback()
+          --  end
+          --end, { 'i', 's' }),
+          --['<S-Tab>'] = cmp.mapping(function(fallback)
+          --  if cmp.visible() then
+          --    cmp.select_prev_item()
+          --  elseif luasnip.jumpable(-1) then
+          --    luasnip.jump(-1)
+          --  else
+          --    fallback()
+          --  end
+          --end, { 'i', 's' }),
         },
         -- don't auto select item
         preselect = cmp.PreselectMode.None,
@@ -356,12 +321,11 @@ require("lazy").setup({
           behavior = cmp.ConfirmBehavior.Insert,
         },
         sources = {
-          { name = 'nvim_lsp' },                       -- from language server
-          { name = 'path' },                           -- file paths
-          { name = 'nvim_lsp_signature_help'},         -- display function signatures with current parameter emphasized
-          { name = 'nvim_lua', keyword_length = 2},    -- complete neovim's Lua runtime API such vim.lsp.*
-          { name = 'buffer', keyword_length = 2 },     -- source current buffer
-          { name = 'rg' },                             -- search completion
+          { name = 'nvim_lsp', keyword_length = 2, priority = 10 },  -- from language server
+          { name = 'nvim_lsp_signature_help', priority = 20 },       -- display function signature with current parameter emphasized
+          { name = 'path' },                                         -- file paths
+          { name = 'nvim_lua', keyword_length = 2},                  -- complete neovim's Lua runtime API such vim.lsp.*
+          { name = 'buffer', keyword_length = 4 },                   -- source current buffer
         },
         window = {
           completion = cmp.config.window.bordered(),
@@ -448,7 +412,6 @@ require("lazy").setup({
         -- rust-tools options
         tools = {
           autoSetHints = true,
-          hover_with_actions = true,
           inlay_hints = {
             only_current_line = false,      -- only show inlay hints for the current line
             show_parameter_hints = true,    -- whether to show parameter hints with the inlay hints or not
@@ -625,8 +588,9 @@ set.visualbell = true
 set.list = true              -- display white characters
 set.listchars = {tab='→ ',trail='·',nbsp='·',precedes='«',extends='»',eol='↲'}
 set.foldenable = false
-set.foldlevel = 4            -- limit folding to 4 levels
-set.foldmethod = 'syntax'    -- use language syntax to generate folds
+--set.foldlevel = 4            -- limit folding to 4 levels
+--set.foldmethod = 'syntax'    -- use language syntax to generate folds
+set.foldexpr = 'nvim_treesitter#foldexpr()'
 set.wrap = true              -- wrap lines even if very long
 set.eol = true               -- show if there's no eol char
 set.startofline = false      -- do not move the cursor to the first non-blank of the line
@@ -672,11 +636,11 @@ set.wildignore = {'*/cache/*', '*/tmp/*', '*/.venv*'}
 -- Backup files
 set.backup = true                         -- use backup files
 set.writebackup = true                    -- backup before overwriting a file
-set.swapfile = true                       -- use swap file
+set.swapfile = false                       -- use swap file
 set.undofile = true                       -- save history to an undo file
 set.undodir = CACHE .. '/nvim/undo//'     -- undo files
 set.backupdir = CACHE .. '/nvim/backup//' -- backups
-set.directory = CACHE .. '/nvim/swap//'   -- swap files
+--set.directory = CACHE .. '/nvim/swap//'   -- swap files
 
 -- When opening a window put it right or below the current one
 vim.opt.splitright = true  -- Split windows right to the current windows
