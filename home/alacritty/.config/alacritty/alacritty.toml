@@ -1,0 +1,107 @@
+live_config_reload = true
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black = "0x696969"
+blue = "0x007FFF"
+cyan = "0x00CCCC"
+green = "0x03C03C"
+magenta = "0xFF1493"
+red = "0xFF2400"
+white = "0xFFFAFA"
+yellow = "0xFDFF00"
+
+[colors.normal]
+black = "0x10100E"
+blue = "0x0087BD"
+cyan = "0x20B2AA"
+green = "0x009F6B"
+magenta = "0x9A4EAE"
+red = "0xC40233"
+white = "0xC6C6C4"
+yellow = "0xFFD700"
+
+[colors.primary]
+background = "0x10100E"
+foreground = "0xC6C6C4"
+
+[env]
+TERM = "alacritty"
+
+[font.bold_italic]
+family = "Inconsolata LGC Nerd Font Mono"
+style = "BoldItalic"
+
+[font.italic]
+family = "Inconsolata LGC Nerd Font Mono"
+style = "Italic"
+
+[font.normal]
+family = "Inconsolata LGC Nerd Font Mono"
+style = "Regular"
+
+[keyboard]
+bindings = [
+    # Fix Alt-{character} on MacOS
+    { key = "C", mods = "Alt", chars = "\u001Bc" },
+    { key = "X", mods = "Alt", chars = "\u001Bx" },
+    { key = "Space", mods = "Alt", chars = "^@" },
+    { key = "Key0", mods = "Command", action = "ResetFontSize" },
+    { key = "Equals", mods = "Command", action = "IncreaseFontSize" },
+    { key = "Plus", mods = "Command", action = "IncreaseFontSize" },
+    { key = "NumpadAdd", mods = "Command", action = "IncreaseFontSize" },
+    { key = "Minus", mods = "Command", action = "DecreaseFontSize" },
+    { key = "NumpadSubtract", mods = "Command", action = "DecreaseFontSize" },
+    { key = "B", mods = "Command", action = "SearchBackward", mode = "~Search" },
+    { key = "C", mods = "Command", action = "Copy" },
+    { key = "Q", mods = "Command", action = "Quit" },
+    { key = "N", mods = "Command", action = "CreateNewWindow" },
+    { key = "N", mods = "Command|Shift", action = "SpawnNewInstance" },
+    { key = "V", mods = "Command", action = "Paste" },
+    #{ key = "F", mods = "Command", chars = "\u0002[?" },
+    { key = "R", mods = "Command", command = { args = ["rename-window"], program = "/usr/local/bin/tmux" } },
+
+    # TMUX BINDINGS START
+    # Select a new tmux session for the attached client interactively
+    { key= "K", mods= "Command", chars= "\u0002s" },
+    # Select window 1-9
+    { key = "Key1", mods = "Command", chars = "\u00021" },
+    { key = "Key2", mods = "Command", chars = "\u00022" },
+    { key = "Key3", mods = "Command", chars = "\u00023" },
+    { key = "Key4", mods = "Command", chars = "\u00024" },
+    { key = "Key5", mods = "Command", chars = "\u00025" },
+    { key = "Key6", mods = "Command", chars = "\u00026" },
+    { key = "Key7", mods = "Command", chars = "\u00027" },
+    { key = "Key8", mods = "Command", chars = "\u00028" },
+    { key = "Key9", mods = "Command", chars = "\u00029" },
+    # Create/Close Window
+    { key = "T", mods = "Command", chars = "\u0002c" },
+    { key = "W", mods = "Command", chars = "\u0002&" },
+    # Select Pane
+    { key = "Left", mods = "Command", chars = "\u0002h" },
+    { key = "Right", mods = "Command", chars = "\u0002l" },
+    { key = "Up", mods = "Command", chars = "\u0002k" },
+    { key = "Down", mods = "Command", chars = "\u0002j" },
+    # Resize Pane
+    { key = "Left", mods = "Command|Shift", chars = "\u0002H" },
+    { key = "Right", mods = "Command|Shift", chars = "\u0002L" },
+    { key = "Up", mods = "Command|Shift", chars = "\u0002K" },
+    { key = "Down", mods = "Command|Shift", chars = "\u0002J" }
+]
+
+[shell]
+args = ["-i", "-c", "tmux new-session -A -D -s main"]
+program = "/bin/zsh"
+
+[window]
+dynamic_padding = false
+opacity = 0.95
+
+[window.padding]
+x = 1
+
+[cursor]
+#option_as_alt = "Both"
+vi_mode_style = { blinking = "On" }
